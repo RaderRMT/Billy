@@ -23,10 +23,7 @@ public class Actions implements ActionListener {
 			case "Select Replay 1":
 				File mcprToExtractTimeline = openFilePrompt();
 
-				if(mcprToExtractTimeline == null) {
-					System.out.println("file 1 is null");
-					return;
-				}
+				if(mcprToExtractTimeline == null) return;
 
 				instance.setReplayExtractTimelineButtonName(mcprToExtractTimeline.getName());
 				tempFolder = new File(mcprToExtractTimeline.getParent() + "/extractor_temp/");
@@ -37,10 +34,7 @@ public class Actions implements ActionListener {
 			case "Select Replay 2":
 				File mcprToInsertTimeline = openFilePrompt();
 
-				if(mcprToInsertTimeline == null) {
-					System.out.println("file 2 is null");
-					return;
-				}
+				if(mcprToInsertTimeline == null) return;
 
 				instance.setReplayInsertTimelineButtonName(mcprToInsertTimeline.getName());
 				instance.setMcprToInsertTimeline(mcprToInsertTimeline);
@@ -70,7 +64,13 @@ public class Actions implements ActionListener {
 				File extract = instance.getMcprToExtractTimeline();
 				File insert = instance.getMcprToInsertTimeline();
 
+
 				if(extract != null && insert != null) {
+					if(extract.equals(insert)) {
+						JOptionPane.showMessageDialog(null, "Both Replays must be different!");
+						return;
+					}
+
 					try {
 						ZipFile toExtract = new ZipFile(extract);
 						ZipFile toInsert = new ZipFile(insert);
