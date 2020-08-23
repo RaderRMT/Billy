@@ -21,7 +21,7 @@ public class Actions implements ActionListener {
 
 		switch(command) {
 			case "Select Replay 1":
-				File mcprToExtractTimeline = openFilePrompt();
+				File mcprToExtractTimeline = openFilePrompt(true);
 
 				if(mcprToExtractTimeline == null) return;
 
@@ -32,7 +32,7 @@ public class Actions implements ActionListener {
 				break;
 
 			case "Select Replay 2":
-				File mcprToInsertTimeline = openFilePrompt();
+				File mcprToInsertTimeline = openFilePrompt(false);
 
 				if(mcprToInsertTimeline == null) return;
 
@@ -64,10 +64,23 @@ public class Actions implements ActionListener {
 				File extract = instance.getMcprToExtractTimeline();
 				File insert = instance.getMcprToInsertTimeline();
 
-
 				if(extract != null && insert != null) {
 					if(extract.equals(insert)) {
 						JOptionPane.showMessageDialog(null, "Both Replays must be different!");
+						return;
+					}
+
+					if(extract.getName().equals("timelines.json") && extract.isFile()) {
+						try {
+							ZipFile toInsert = new ZipFile(insert);
+
+							toInsert.addFile(extract);
+
+							JOptionPane.showMessageDialog(null, "Successfully inserted the timeline to " + insert.getName());
+						} catch (ZipException zipException) {
+							zipException.printStackTrace();
+						}
+
 						return;
 					}
 
@@ -90,19 +103,25 @@ public class Actions implements ActionListener {
 		}
 	}
 
-	private File openFilePrompt() {
+	private File openFilePrompt(boolean acceptTimelineFile) {
 		JFileChooser fileChooser = new JFileChooser(System.getenv("APPDATA") + "\\.minecraft\\replay_recordings\\");
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		fileChooser.setMultiSelectionEnabled(false);
 		fileChooser.setFileFilter(new FileFilter() {
 			@Override
 			public boolean accept(File file) {
-				return file.isDirectory() || file.getName().endsWith(".mcpr");
+				boolean ok = file.isDirectory() || file.getName().endsWith(".mcpr");
+
+				if(acceptTimelineFile) {
+					ok |= file.getName().equals("timelines.json");
+				}
+
+				return ok;
 			}
 
 			@Override
 			public String getDescription() {
-				return "Replay File (*.mcpr)";
+				return "Replay File (*.mcpr" + ((acceptTimelineFile) ? ", timelines.json" : "") + ")";
 			}
 		});
 
