@@ -11,20 +11,17 @@ import java.io.File;
 
 public class Actions implements ActionListener {
 
-	private final String REPLAYS_FOLDER = System.getenv("APPDATA") + "\\.minecraft\\replay_recordings\\";
-
-	File tempFolder;
-	Main instance;
+	private File tempFolder;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
 
-		instance = Main.getInstance();
+		Main instance = Main.getInstance();
 
 		switch(command) {
 			case "Select Replay 1":
-				File mcprToExtractTimeline = openFilePrompt(REPLAYS_FOLDER, "Replay File", ".mcpr");
+				File mcprToExtractTimeline = openFilePrompt();
 
 				if(mcprToExtractTimeline == null) {
 					System.out.println("file 1 is null");
@@ -38,7 +35,7 @@ public class Actions implements ActionListener {
 				break;
 
 			case "Select Replay 2":
-				File mcprToInsertTimeline = openFilePrompt(REPLAYS_FOLDER, "Replay File", ".mcpr");
+				File mcprToInsertTimeline = openFilePrompt();
 
 				if(mcprToInsertTimeline == null) {
 					System.out.println("file 2 is null");
@@ -93,41 +90,19 @@ public class Actions implements ActionListener {
 		}
 	}
 
-	private File openFilePrompt(String firstFolder, String description, String... extensions) {
-		if(extensions == null) throw new IllegalArgumentException("extensions must not be null");
-		if(description == null) throw new IllegalArgumentException("description must not be null");
-		if(extensions.length == 0) throw new IllegalArgumentException("extensions must at least contain one extension");
-
-		for(String extension : extensions) {
-			if(!extension.startsWith(".")) {
-				throw new IllegalArgumentException("Extension \"" + extension + "\" must start with '.', try by replacing it to \"." + extension + "\"");
-			}
-		}
-
-		JFileChooser fileChooser = new JFileChooser(firstFolder);
+	private File openFilePrompt() {
+		JFileChooser fileChooser = new JFileChooser(System.getenv("APPDATA") + "\\.minecraft\\replay_recordings\\");
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		fileChooser.setMultiSelectionEnabled(false);
 		fileChooser.setFileFilter(new FileFilter() {
 			@Override
 			public boolean accept(File file) {
-				boolean ok = false;
-
-				for(String extension : extensions) {
-					ok |= file.getName().toLowerCase().endsWith(extension.toLowerCase()) || file.isDirectory();
-				}
-
-				return ok;
+				return file.isDirectory() || file.getName().endsWith(".mcpr");
 			}
 
 			@Override
 			public String getDescription() {
-				String finalDescription = description + " (";
-
-				for(String extension : extensions) {
-					finalDescription += "*" + extension + ((!extensions[extensions.length - 1].equals(extension)) ? ", " : ")");
-				}
-
-				return finalDescription;
+				return "Replay File (*.mcpr)";
 			}
 		});
 
