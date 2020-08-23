@@ -1,7 +1,6 @@
 package fr.rader.rtt;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import java.io.File;
 
 public class Main {
@@ -68,53 +67,6 @@ public class Main {
 		}
 
 		start();
-	}
-
-	public File openFilePrompt(String firstFolder, String description, String... extensions) {
-		if(extensions == null) throw new IllegalArgumentException("extensions must not be null");
-		if(description == null) throw new IllegalArgumentException("description must not be null");
-		if(extensions.length == 0) throw new IllegalArgumentException("extensions must at least contain one extension");
-
-		for(String extension : extensions) {
-			if(!extension.startsWith(".")) {
-				throw new IllegalArgumentException("Extension \"" + extension + "\" must start with '.', try by replacing it to \"." + extension + "\"");
-			}
-		}
-
-		JFileChooser fileChooser = new JFileChooser(firstFolder);
-		fileChooser.setAcceptAllFileFilterUsed(false);
-		fileChooser.setMultiSelectionEnabled(false);
-		fileChooser.setFileFilter(new FileFilter() {
-			@Override
-			public boolean accept(File file) {
-				boolean ok = false;
-
-				for(String extension : extensions) {
-					ok |= file.getName().toLowerCase().endsWith(extension.toLowerCase()) || file.isDirectory();
-				}
-
-				return ok;
-			}
-
-			@Override
-			public String getDescription() {
-				String finalDescription = description + " (";
-
-				for(String extension : extensions) {
-					finalDescription += "*" + extension + ((!extensions[extensions.length - 1].equals(extension)) ? ", " : ")");
-				}
-
-				return finalDescription;
-			}
-		});
-
-		int option = fileChooser.showOpenDialog(null);
-
-		if(option == JFileChooser.APPROVE_OPTION) {
-			return fileChooser.getSelectedFile();
-		}
-
-		return null;
 	}
 
 	public File getMcprToExtractTimeline() {
