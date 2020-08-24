@@ -1,5 +1,8 @@
 package fr.rader.rtt;
 
+import fr.rader.rtt.listeners.MenuItemListener;
+import fr.rader.rtt.timeline.TimelineSerialization;
+
 import javax.swing.*;
 import java.io.File;
 
@@ -11,44 +14,40 @@ public class Main {
 		return instance;
 	}
 
-	private final Actions actions = new Actions();
+	private MenuItemListener menuItemListener = new MenuItemListener();
 
-	private File mcprToExtractTimeline;
-	private File mcprToInsertTimeline;
+	private File leftFile;
+	private File rightFile;
 
-	private JButton replayExtractTimelineButton;
-	private JButton replayInsertTimelineButton;
+	private TimelineSerialization serialization = new TimelineSerialization();
 
-	private void start() {
-		JFrame frame = new JFrame("Replay Timeline Extractor");
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	public void start() {
+		JFrame frame = new JFrame("Replay Timeline Transfer");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(800, 600);
 
-		JPanel panel = new JPanel(new SpringLayout());
+		JMenuBar menuBar = new JMenuBar();
 
-		JLabel replayExtractTimeline = new JLabel("Replay to extract the timeline:");
-		panel.add(replayExtractTimeline);
-		replayExtractTimelineButton = new JButton("Select Replay 1");
-		replayExtractTimelineButton.addActionListener(actions);
-		panel.add(replayExtractTimelineButton);
+		JMenu fileMenu = new JMenu("File");
 
-		JLabel replayInsertTimeline = new JLabel("Replay to insert the timeline:");
-		panel.add(replayInsertTimeline);
-		replayInsertTimelineButton = new JButton("Select Replay 2");
-		replayInsertTimelineButton.addActionListener(actions);
-		panel.add(replayInsertTimelineButton);
+		JMenuItem saveBoth = new JMenuItem("Save Both");
+		saveBoth.addActionListener(menuItemListener);
 
-		JButton extractTimelineOnly = new JButton("Extract timeline without inserting");
-		extractTimelineOnly.addActionListener(actions);
-		panel.add(extractTimelineOnly);
-		JButton extractAndInsert = new JButton("Extract and insert timeline");
-		extractAndInsert.addActionListener(actions);
-		panel.add(extractAndInsert);
+		JMenuItem saveLeft = new JMenuItem("Save Left");
+		saveLeft.addActionListener(menuItemListener);
 
-		SpringUtilities.makeCompactGrid(panel, 3, 2, 6, 6, 6, 6);
+		JMenuItem saveRight = new JMenuItem("Save Right");
+		saveRight.addActionListener(menuItemListener);
 
-		frame.setContentPane(panel);
+		fileMenu.add(saveBoth);
+		fileMenu.add(saveLeft);
+		fileMenu.add(saveRight);
 
-		frame.pack();
+		menuBar.add(fileMenu);
+
+		frame.setJMenuBar(menuBar);
+
+		frame.setContentPane(new Interface().panel1);
 		frame.setVisible(true);
 	}
 
@@ -69,27 +68,19 @@ public class Main {
 		start();
 	}
 
-	public File getMcprToExtractTimeline() {
-		return mcprToExtractTimeline;
+	public File getLeftFile() {
+		return leftFile;
 	}
 
-	public void setMcprToExtractTimeline(File mcprToExtractTimeline) {
-		this.mcprToExtractTimeline = mcprToExtractTimeline;
+	public void setLeftFile(File leftFile) {
+		this.leftFile = leftFile;
 	}
 
-	public File getMcprToInsertTimeline() {
-		return mcprToInsertTimeline;
+	public File getRightFile() {
+		return rightFile;
 	}
 
-	public void setMcprToInsertTimeline(File mcprToInsertTimeline) {
-		this.mcprToInsertTimeline = mcprToInsertTimeline;
-	}
-
-	public void setReplayInsertTimelineButtonName(String name) {
-		replayInsertTimelineButton.setText(name);
-	}
-
-	public void setReplayExtractTimelineButtonName(String name) {
-		replayExtractTimelineButton.setText(name);
+	public void setRightFile(File rightFile) {
+		this.rightFile = rightFile;
 	}
 }
