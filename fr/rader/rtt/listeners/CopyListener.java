@@ -2,7 +2,6 @@ package fr.rader.rtt.listeners;
 
 import fr.rader.rtt.Interface;
 import fr.rader.rtt.Main;
-import fr.rader.rtt.timeline.Timeline;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

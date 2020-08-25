@@ -12,6 +12,8 @@ public class Main {
 	private File leftFile;
 	private File rightFile;
 
+	public JCheckBoxMenuItem saveToDefaultFolder;
+
 	public void start() {
 		MenuItemListener menuItemListener = new MenuItemListener();
 
@@ -32,9 +34,14 @@ public class Main {
 		JMenuItem saveRight = new JMenuItem("Save Right");
 		saveRight.addActionListener(menuItemListener);
 
+		saveToDefaultFolder = new JCheckBoxMenuItem("Save timelines to default folder");
+		saveToDefaultFolder.setState(true);
+
 		fileMenu.add(saveBoth);
 		fileMenu.add(saveLeft);
 		fileMenu.add(saveRight);
+		fileMenu.add(new JSeparator());
+		fileMenu.add(saveToDefaultFolder);
 
 		menuBar.add(fileMenu);
 

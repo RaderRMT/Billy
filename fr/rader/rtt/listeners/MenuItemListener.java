@@ -6,13 +6,17 @@ import fr.rader.rtt.timeline.TimelineSerialization;
 import net.lingala.zip4j.ZipFile;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 
 public class MenuItemListener implements ActionListener {
+
+	private File lastFolderOpened;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -29,22 +33,16 @@ public class MenuItemListener implements ActionListener {
 
 					saveTimeline(serialization.serialize(theInterface.leftTimelineList), OpenListener.LEFT_SIDE + "timelines.json", instance.getLeftFile());
 					saveTimeline(serialization.serialize(theInterface.rightTimelineList), OpenListener.RIGHT_SIDE + "timelines.json", instance.getRightFile());
-
-					JOptionPane.showMessageDialog(null, "Saved!");
 					break;
 				case "Save Left":
 					if(instance.getLeftFile() == null) return;
 
 					saveTimeline(serialization.serialize(theInterface.leftTimelineList), OpenListener.LEFT_SIDE + "timelines.json", instance.getLeftFile());
-
-					JOptionPane.showMessageDialog(null, "Saved!");
 					break;
 				case "Save Right":
 					if(instance.getRightFile() == null) return;
 
 					saveTimeline(serialization.serialize(theInterface.rightTimelineList), OpenListener.RIGHT_SIDE + "timelines.json", instance.getRightFile());
-
-					JOptionPane.showMessageDialog(null, "Saved!");
 					break;
 			}
 		} catch (IOException ioException) {
@@ -61,12 +59,72 @@ public class MenuItemListener implements ActionListener {
 
 			writerLeft.close();
 
-			if(!instanceFile.getName().equals("timelines.json")) {
+			if(!instanceFile.getName().endsWith(".json")) {
 				ZipFile mcprFile = new ZipFile(instanceFile);
 				mcprFile.addFile(timelinesFile);
+
+				return;
 			}
+
+			if(!Main.getInstance().saveToDefaultFolder.getState()) {
+				File file = saveTimelinePrompt();
+
+				if(file == null) return;
+
+				Files.copy(new File(timelinesFile).toPath(), file.toPath());
+
+				JOptionPane.showMessageDialog(null, "Saved to " + file.getAbsolutePath());
+				return;
+			}
+
+			JOptionPane.showMessageDialog(null, "Saved to " + timelinesFile.replace("/", "\\"));
 		} catch (IOException zipException) {
 			JOptionPane.showMessageDialog(null, zipException.getLocalizedMessage());
+		}
+	}
+
+	private File saveTimelinePrompt() {
+		JFileChooser fileChooser = new JFileChooser();
+
+		if(lastFolderOpened != null) fileChooser = new JFileChooser(lastFolderOpened);
+
+		fileChooser.setSelectedFile(new File("timelines.json"));
+		fileChooser.setAcceptAllFileFilterUsed(false);
+		fileChooser.setMultiSelectionEnabled(false);
+		fileChooser.setFileFilter(new FileFilter() {
+			@Override
+			public boolean accept(File file) {
+				return file.isDirectory() || file.getName().endsWith(".json");
+			}
+
+			@Override
+			public String getDescription() {
+				return "Replay Timeline (*.json)";
+			}
+		});
+
+		while(true) {
+			int option = fileChooser.showSaveDialog(null);
+
+			if(option == JFileChooser.APPROVE_OPTION) {
+				File toReturn = fileChooser.getSelectedFile();
+
+				if(!toReturn.getName().endsWith(".json")) {
+					toReturn = new File(toReturn.getAbsolutePath() + ".json");
+				}
+
+				String fileName = toReturn.getName();
+				if(toReturn.getParentFile().listFiles(pathname -> pathname.getName().equals(fileName)).length != 0) {
+					JOptionPane.showMessageDialog(null, "A timeline with this name already exists");
+					continue;
+				}
+
+				lastFolderOpened = toReturn.getParentFile();
+
+				return toReturn;
+			}
+
+			return null;
 		}
 	}
 }

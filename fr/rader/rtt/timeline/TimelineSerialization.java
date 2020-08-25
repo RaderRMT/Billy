@@ -3,7 +3,6 @@ package fr.rader.rtt.timeline;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import javax.swing.*;
 import java.io.*;
 import java.util.*;
 

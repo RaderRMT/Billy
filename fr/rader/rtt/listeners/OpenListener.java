@@ -81,26 +81,18 @@ public class OpenListener implements ActionListener {
 		hasNewReplay = true;
 		hasTimeline = true;
 
-		if(isOpenReplayLeft) {
-			if(file.equals(rightReplay)) {
-				hasNewReplay = false;
-				JOptionPane.showMessageDialog(null, "Replays must be different!");
-				return;
-			}
-		} else {
-			if(file.equals(leftReplay)) {
-				hasNewReplay = false;
-				JOptionPane.showMessageDialog(null, "Replays must be different!");
-				return;
-			}
+		if((isOpenReplayLeft && file.equals(rightReplay)) || (!isOpenReplayLeft && file.equals(leftReplay))) {
+			hasNewReplay = false;
+			JOptionPane.showMessageDialog(null, "Replays must be different!");
+			return;
 		}
 
 		if(file.getName().equals("timelines.json")) {
 			try {
-				File test = new File(((isOpenReplayLeft) ? LEFT_SIDE : RIGHT_SIDE) + "timelines.json");
-				test.getParentFile().mkdirs();
+				File timelineFolder = new File(((isOpenReplayLeft) ? LEFT_SIDE : RIGHT_SIDE) + "timelines.json");
+				timelineFolder.getParentFile().mkdirs();
 
-				Files.copy(file.toPath(), test.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				Files.copy(file.toPath(), timelineFolder.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			} catch (IOException ioException) {
 				JOptionPane.showMessageDialog(null, "Error: " + Arrays.toString(ioException.getStackTrace()));
 				hasNewReplay = false;
@@ -133,12 +125,12 @@ public class OpenListener implements ActionListener {
 		fileChooser.setFileFilter(new FileFilter() {
 			@Override
 			public boolean accept(File file) {
-				return file.isDirectory() || file.getName().endsWith(".mcpr") || file.getName().equals("timelines.json");
+				return file.isDirectory() || file.getName().endsWith(".mcpr") || file.getName().endsWith(".json");
 			}
 
 			@Override
 			public String getDescription() {
-				return "Replay File (*.mcpr, timelines.json)";
+				return "Replay File (*.mcpr, *.json)";
 			}
 		});
 
