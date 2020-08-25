@@ -25,17 +25,23 @@ public class MenuItemListener implements ActionListener {
 		try {
 			switch(command) {
 				case "Save Both":
+					if(instance.getLeftFile() == null && instance.getRightFile() == null) return;
+
 					saveTimeline(serialization.serialize(theInterface.leftTimelineList), OpenListener.LEFT_SIDE + "timelines.json", instance.getLeftFile());
 					saveTimeline(serialization.serialize(theInterface.rightTimelineList), OpenListener.RIGHT_SIDE + "timelines.json", instance.getRightFile());
 
 					JOptionPane.showMessageDialog(null, "Saved!");
 					break;
 				case "Save Left":
+					if(instance.getLeftFile() == null) return;
+
 					saveTimeline(serialization.serialize(theInterface.leftTimelineList), OpenListener.LEFT_SIDE + "timelines.json", instance.getLeftFile());
 
 					JOptionPane.showMessageDialog(null, "Saved!");
 					break;
 				case "Save Right":
+					if(instance.getRightFile() == null) return;
+
 					saveTimeline(serialization.serialize(theInterface.rightTimelineList), OpenListener.RIGHT_SIDE + "timelines.json", instance.getRightFile());
 
 					JOptionPane.showMessageDialog(null, "Saved!");

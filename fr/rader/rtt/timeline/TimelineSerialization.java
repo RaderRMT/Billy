@@ -3,6 +3,7 @@ package fr.rader.rtt.timeline;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.*;
 
@@ -16,7 +17,13 @@ public class TimelineSerialization {
 		writer.beginObject();
 		for(Map.Entry<String, Timeline> entry : timelines.entrySet()) {
 			Timeline timeline = entry.getValue();
-			writer.name(entry.getKey()).beginArray();
+
+			String timelineName = entry.getKey();
+			if(timelineName.equals("\uD835\uDE25\uD835\uDE26\uD835\uDE27\uD835\uDE22\uD835\uDE36\uD835\uDE2D\uD835\uDE35")) {
+				timelineName = "";
+			}
+
+			writer.name(timelineName).beginArray();
 
 			// writing paths
 			for(Path path : timeline.getPaths()) {
@@ -112,7 +119,7 @@ public class TimelineSerialization {
 			String timelineName = reader.nextName();
 
 			if(timelineName.equals("")) {
-				timelineName = "Main";
+				timelineName = "\uD835\uDE25\uD835\uDE26\uD835\uDE27\uD835\uDE22\uD835\uDE36\uD835\uDE2D\uD835\uDE35";
 			}
 
 			List<Path> paths = new ArrayList<>();

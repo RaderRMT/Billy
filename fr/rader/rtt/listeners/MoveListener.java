@@ -21,8 +21,12 @@ public class MoveListener implements ActionListener {
 		}
 
 		if(e.getSource().equals(theInterface.moveRight)) {
+			if(Main.getInstance().getLeftFile() == null) return;
+
 			moveToList(theInterface.leftList.getSelectedValuesList(), true);
 		} else {
+			if(Main.getInstance().getRightFile() == null) return;
+
 			moveToList(theInterface.rightList.getSelectedValuesList(), false);
 		}
 	}
@@ -34,14 +38,32 @@ public class MoveListener implements ActionListener {
 					theInterface.rightTimelineList.put(name, theInterface.leftTimelineList.get(name));
 					theInterface.leftTimelineList.remove(name);
 				} else if(theInterface.rightTimelineList != null) {
-					JOptionPane.showMessageDialog(null, "\"" + Main.getInstance().getRightFile().getName() + "\" already contains a timeline named \"" + name + "\"");
+					String newTimelineName = JOptionPane.showInputDialog(null, "\"" + Main.getInstance().getRightFile().getName() + "\" already contains a timeline named \"" + name + "\"\nEnter a new name or press cancel to cancel");
+
+					if(newTimelineName != null) {
+						while(theInterface.leftTimelineList.containsKey(newTimelineName)) {
+							newTimelineName = JOptionPane.showInputDialog(null, "Enter a new name for \"" + name + "\" or press cancel to cancel");
+						}
+
+						theInterface.rightTimelineList.put(newTimelineName, theInterface.leftTimelineList.get(name));
+						theInterface.leftTimelineList.remove(name);
+					}
 				}
 			} else {
 				if(theInterface.leftTimelineList != null && !theInterface.leftTimelineList.containsKey(name)) {
 					theInterface.leftTimelineList.put(name, theInterface.rightTimelineList.get(name));
 					theInterface.rightTimelineList.remove(name);
 				} else if(theInterface.leftTimelineList != null) {
-					JOptionPane.showMessageDialog(null, "\"" + Main.getInstance().getLeftFile().getName() + "\" already contains a timeline named \"" + name + "\"");
+					String newTimelineName = JOptionPane.showInputDialog(null, "\"" + Main.getInstance().getLeftFile().getName() + "\" already contains a timeline named \"" + name + "\"\nEnter a new name or press cancel to cancel");
+
+					if(newTimelineName != null) {
+						while(theInterface.rightTimelineList.containsKey(newTimelineName)) {
+							newTimelineName = JOptionPane.showInputDialog(null, "Enter a new name for \"" + name + "\" or press cancel to cancel");
+						}
+
+						theInterface.leftTimelineList.put(newTimelineName, theInterface.rightTimelineList.get(name));
+						theInterface.rightTimelineList.remove(name);
+					}
 				}
 			}
 		}

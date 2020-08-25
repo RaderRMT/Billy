@@ -1,9 +1,6 @@
 package fr.rader.rtt;
 
-import fr.rader.rtt.listeners.CopyListener;
-import fr.rader.rtt.listeners.DeleteListener;
-import fr.rader.rtt.listeners.MoveListener;
-import fr.rader.rtt.listeners.OpenListener;
+import fr.rader.rtt.listeners.*;
 import fr.rader.rtt.timeline.Timeline;
 
 import javax.swing.*;
@@ -17,6 +14,7 @@ public class Interface {
 	private MoveListener moveListener = new MoveListener();
 	private CopyListener copyListener = new CopyListener();
 	private DeleteListener deleteListener = new DeleteListener();
+	private RenameListener renameListener = new RenameListener();
 
 	private static Interface instance;
 
@@ -35,8 +33,11 @@ public class Interface {
 	public JButton copyRight;
 	public JButton copyLeft;
 
-	public JButton deleteTimelinesRight;
+	public JButton renameRightTimeline;
+	public JButton renameLeftTimeline;
+
 	public JButton deleteTimelinesLeft;
+	public JButton deleteTimelinesRight;
 
 	public Map<String, Timeline> leftTimelineList;
 	public Map<String, Timeline> rightTimelineList;
@@ -55,6 +56,9 @@ public class Interface {
 
 		deleteTimelinesLeft.addActionListener(deleteListener);
 		deleteTimelinesRight.addActionListener(deleteListener);
+
+		renameLeftTimeline.addActionListener(renameListener);
+		renameRightTimeline.addActionListener(renameListener);
 	}
 
 	public void updateNames() {

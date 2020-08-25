@@ -23,6 +23,8 @@ public class OpenListener implements ActionListener {
 	public static final String LEFT_SIDE = REPLAY_RECORDINGS + "extracted_timelines/left/";
 	public static final String RIGHT_SIDE = REPLAY_RECORDINGS + "extracted_timelines/right/";
 
+	private File lastOpenedFolder = new File(REPLAY_RECORDINGS);
+
 	private File leftReplay;
 	private File rightReplay;
 
@@ -125,7 +127,7 @@ public class OpenListener implements ActionListener {
 	}
 
 	private File openFilePrompt() {
-		JFileChooser fileChooser = new JFileChooser(REPLAY_RECORDINGS);
+		JFileChooser fileChooser = new JFileChooser(lastOpenedFolder);
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		fileChooser.setMultiSelectionEnabled(false);
 		fileChooser.setFileFilter(new FileFilter() {
@@ -143,6 +145,7 @@ public class OpenListener implements ActionListener {
 		int option = fileChooser.showOpenDialog(null);
 
 		if(option == JFileChooser.APPROVE_OPTION) {
+			lastOpenedFolder = fileChooser.getSelectedFile().getParentFile();
 			return fileChooser.getSelectedFile();
 		}
 
