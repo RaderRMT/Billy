@@ -17,11 +17,4 @@ public class Timeline {
 	public void setPaths(List<Path> paths) {
 		this.paths = paths;
 	}
-
-	@Override
-	public String toString() {
-		return "Timeline{" +
-				"paths=" + paths +
-				'}';
-	}
 }

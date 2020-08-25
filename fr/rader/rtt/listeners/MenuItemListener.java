@@ -8,6 +8,7 @@ import net.lingala.zip4j.ZipFile;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -18,97 +19,48 @@ public class MenuItemListener implements ActionListener {
 		String command = e.getActionCommand();
 
 		TimelineSerialization serialization = new TimelineSerialization();
+		Interface theInterface = Interface.getInstance();
 		Main instance = Main.getInstance();
 
-		if(instance.getLeftFile() == null || instance.getRightFile() == null) {
-			return;
+		try {
+			switch(command) {
+				case "Save Both":
+					saveTimeline(serialization.serialize(theInterface.leftTimelineList), OpenListener.LEFT_SIDE + "timelines.json", instance.getLeftFile());
+					saveTimeline(serialization.serialize(theInterface.rightTimelineList), OpenListener.RIGHT_SIDE + "timelines.json", instance.getRightFile());
+
+					JOptionPane.showMessageDialog(null, "Saved!");
+					break;
+				case "Save Left":
+					saveTimeline(serialization.serialize(theInterface.leftTimelineList), OpenListener.LEFT_SIDE + "timelines.json", instance.getLeftFile());
+
+					JOptionPane.showMessageDialog(null, "Saved!");
+					break;
+				case "Save Right":
+					saveTimeline(serialization.serialize(theInterface.rightTimelineList), OpenListener.RIGHT_SIDE + "timelines.json", instance.getRightFile());
+
+					JOptionPane.showMessageDialog(null, "Saved!");
+					break;
+			}
+		} catch (IOException ioException) {
+			ioException.printStackTrace();
 		}
+	}
 
-		Interface theInterface = Interface.getInstance();
+	private void saveTimeline(String serializedTimeline, String timelinesFile, File instanceFile) {
+		try {
+			FileWriter writerLeft = new FileWriter(timelinesFile);
 
-		switch(command) {
-			case "Save Both":
-				if(instance.getLeftFile() == null || instance.getRightFile() == null) return;
+			writerLeft.write(serializedTimeline);
+			writerLeft.flush();
 
-				try {
-					FileWriter writerLeft = new FileWriter(OpenListener.REPLAY_RECORDINGS + "extractor_temp/left/timelines.json");
+			writerLeft.close();
 
-					writerLeft.write(serialization.serialize(theInterface.leftTimelineList));
-					writerLeft.flush();
-
-					writerLeft.close();
-
-					if(!instance.getLeftFile().getName().equals("timelines.json")) {
-						ZipFile file = new ZipFile(instance.getLeftFile());
-						file.addFile(OpenListener.REPLAY_RECORDINGS + "extractor_temp/left/timelines.json");
-					} else {
-						JOptionPane.showMessageDialog(null, "Saved to \"" + OpenListener.REPLAY_RECORDINGS + "extractor_temp/left/timelines.json\"");
-					}
-
-					FileWriter writerRight = new FileWriter(OpenListener.REPLAY_RECORDINGS + "extractor_temp/right/timelines.json");
-
-					writerRight.write(serialization.serialize(theInterface.rightTimelineList));
-					writerRight.flush();
-
-					writerRight.close();
-
-					if(!instance.getRightFile().getName().equals("timelines.json")) {
-						ZipFile file = new ZipFile(instance.getRightFile());
-						file.addFile(OpenListener.REPLAY_RECORDINGS + "extractor_temp/right/timelines.json");
-					} else {
-						JOptionPane.showMessageDialog(null, "Saved to \"" + OpenListener.REPLAY_RECORDINGS + "extractor_temp/right/timelines.json\"");
-					}
-				} catch (IOException ioException) {
-					JOptionPane.showMessageDialog(null, ioException.getLocalizedMessage());
-				}
-
-				break;
-			case "Save Left":
-				if(instance.getLeftFile() == null) return;
-
-				try {
-					FileWriter writer = new FileWriter(OpenListener.REPLAY_RECORDINGS + "extractor_temp/left/timelines.json");
-
-					writer.write(serialization.serialize(theInterface.leftTimelineList));
-					writer.flush();
-
-					writer.close();
-
-					if(!instance.getLeftFile().getName().equals("timelines.json")) {
-						ZipFile file = new ZipFile(instance.getLeftFile());
-						file.addFile(OpenListener.REPLAY_RECORDINGS + "extractor_temp/left/timelines.json");
-					} else {
-						JOptionPane.showMessageDialog(null, "Saved to \"" + OpenListener.REPLAY_RECORDINGS + "extractor_temp/left/timelines.json\"");
-					}
-				} catch (IOException ioException) {
-					ioException.printStackTrace();
-					JOptionPane.showMessageDialog(null, ioException.getLocalizedMessage());
-				}
-				break;
-			case "Save Right":
-				if(instance.getRightFile() == null) return;
-
-				try {
-					FileWriter writer = new FileWriter(OpenListener.REPLAY_RECORDINGS + "extractor_temp/right/timelines.json");
-
-					writer.write(serialization.serialize(theInterface.rightTimelineList));
-					writer.flush();
-
-					writer.close();
-
-					System.out.println(instance.getRightFile().getAbsolutePath());
-
-					if(!instance.getRightFile().getName().equals("timelines.json")) {
-						ZipFile file = new ZipFile(instance.getRightFile());
-						file.addFile(OpenListener.REPLAY_RECORDINGS + "extractor_temp/right/timelines.json");
-					} else {
-						JOptionPane.showMessageDialog(null, "Saved to \"" + OpenListener.REPLAY_RECORDINGS + "extractor_temp/right/timelines.json\"");
-					}
-				} catch (IOException ioException) {
-					JOptionPane.showMessageDialog(null, ioException.getLocalizedMessage());
-				}
-
-				break;
+			if(!instanceFile.getName().equals("timelines.json")) {
+				ZipFile mcprFile = new ZipFile(instanceFile);
+				mcprFile.addFile(timelinesFile);
+			}
+		} catch (IOException zipException) {
+			JOptionPane.showMessageDialog(null, zipException.getLocalizedMessage());
 		}
 	}
 }

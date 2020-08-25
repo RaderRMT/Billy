@@ -1,6 +1,7 @@
 package fr.rader.rtt;
 
 import fr.rader.rtt.listeners.CopyListener;
+import fr.rader.rtt.listeners.DeleteListener;
 import fr.rader.rtt.listeners.MoveListener;
 import fr.rader.rtt.listeners.OpenListener;
 import fr.rader.rtt.timeline.Timeline;
@@ -12,30 +13,30 @@ import java.util.Map;
 
 public class Interface {
 
-	private static Interface instance;
+	private OpenListener openListener = new OpenListener();
+	private MoveListener moveListener = new MoveListener();
+	private CopyListener copyListener = new CopyListener();
+	private DeleteListener deleteListener = new DeleteListener();
 
-	public static Interface getInstance() {
-		return instance;
-	}
+	private static Interface instance;
 
 	public JPanel panel1;
 	private JPanel panel;
 
-	public JButton openReplayLeft;
-	public JButton openReplayRight;
-
 	public JList<String> leftList;
 	public JList<String> rightList;
+
+	public JButton openReplayLeft;
+	public JButton openReplayRight;
 
 	public JButton moveLeft;
 	public JButton moveRight;
 
 	public JButton copyRight;
-	public JButton copyButton;
+	public JButton copyLeft;
 
-	private OpenListener openListener = new OpenListener();
-	private MoveListener moveListener = new MoveListener();
-	private CopyListener copyListener = new CopyListener();
+	public JButton deleteTimelinesRight;
+	public JButton deleteTimelinesLeft;
 
 	public Map<String, Timeline> leftTimelineList;
 	public Map<String, Timeline> rightTimelineList;
@@ -49,21 +50,26 @@ public class Interface {
 		moveLeft.addActionListener(moveListener);
 		moveRight.addActionListener(moveListener);
 
-		copyButton.addActionListener(copyListener);
+		copyLeft.addActionListener(copyListener);
 		copyRight.addActionListener(copyListener);
+
+		deleteTimelinesLeft.addActionListener(deleteListener);
+		deleteTimelinesRight.addActionListener(deleteListener);
 	}
 
 	public void updateNames() {
 		if(leftTimelineList != null) {
-			List<String> names = new ArrayList<>();
-			names.addAll(leftTimelineList.keySet());
+			List<String> names = new ArrayList<>(leftTimelineList.keySet());
 			leftList.setListData(names.toArray(new String[0]));
 		}
 
 		if(rightTimelineList != null) {
-			List<String> names = new ArrayList<>();
-			names.addAll(rightTimelineList.keySet());
+			List<String> names = new ArrayList<>(rightTimelineList.keySet());
 			rightList.setListData(names.toArray(new String[0]));
 		}
+	}
+
+	public static Interface getInstance() {
+		return instance;
 	}
 }

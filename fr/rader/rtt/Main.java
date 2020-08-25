@@ -1,7 +1,6 @@
 package fr.rader.rtt;
 
 import fr.rader.rtt.listeners.MenuItemListener;
-import fr.rader.rtt.timeline.TimelineSerialization;
 
 import javax.swing.*;
 import java.io.File;
@@ -10,18 +9,12 @@ public class Main {
 
 	private static Main instance;
 
-	public static Main getInstance() {
-		return instance;
-	}
-
-	private MenuItemListener menuItemListener = new MenuItemListener();
-
 	private File leftFile;
 	private File rightFile;
 
-	private TimelineSerialization serialization = new TimelineSerialization();
-
 	public void start() {
+		MenuItemListener menuItemListener = new MenuItemListener();
+
 		JFrame frame = new JFrame("Replay Timeline Transfer");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
@@ -66,6 +59,10 @@ public class Main {
 		}
 
 		start();
+	}
+
+	public static Main getInstance() {
+		return instance;
 	}
 
 	public File getLeftFile() {

@@ -4,8 +4,10 @@ import fr.rader.rtt.Interface;
 import fr.rader.rtt.Main;
 import fr.rader.rtt.timeline.Timeline;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class CopyListener implements ActionListener {
 
@@ -20,18 +22,26 @@ public class CopyListener implements ActionListener {
 		}
 
 		if(e.getSource().equals(theInterface.copyRight)) {
-			copyToList(theInterface.leftList.getSelectedIndices(), true);
+			copyToList(theInterface.leftList.getSelectedValuesList(), true);
 		} else {
-			copyToList(theInterface.rightList.getSelectedIndices(), false);
+			copyToList(theInterface.rightList.getSelectedValuesList(), false);
 		}
 	}
 
-	private void copyToList(int[] selectedTimelines, boolean copyToRight) {
-		for(int timelineIndex : selectedTimelines) {
+	private void copyToList(List<String> selectedTimelines, boolean copyToRight) {
+		for(String name : selectedTimelines) {
 			if(copyToRight) {
-				theInterface.rightTimelineList.put((String) theInterface.leftTimelineList.keySet().toArray()[timelineIndex], (Timeline) theInterface.leftTimelineList.values().toArray()[timelineIndex]);
+				if(theInterface.rightTimelineList != null && !theInterface.rightTimelineList.containsKey(name)) {
+					theInterface.rightTimelineList.put(name, theInterface.leftTimelineList.get(name));
+				} else if(theInterface.rightTimelineList != null) {
+					JOptionPane.showMessageDialog(null, "\"" + Main.getInstance().getRightFile().getName() + "\" already contains a timeline named \"" + name + "\"");
+				}
 			} else {
-				theInterface.leftTimelineList.put((String) theInterface.rightTimelineList.keySet().toArray()[timelineIndex], (Timeline) theInterface.rightTimelineList.values().toArray()[timelineIndex]);
+				if(theInterface.leftTimelineList != null && !theInterface.leftTimelineList.containsKey(name)) {
+					theInterface.leftTimelineList.put(name, theInterface.rightTimelineList.get(name));
+				} else if(theInterface.leftTimelineList != null) {
+					JOptionPane.showMessageDialog(null, "\"" + Main.getInstance().getLeftFile().getName() + "\" already contains a timeline named \"" + name + "\"");
+				}
 			}
 		}
 

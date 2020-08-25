@@ -1,7 +1,5 @@
 package fr.rader.rtt.timeline;
 
-import java.util.Arrays;
-
 public class Interpolator {
 
 	private String type;
@@ -36,14 +34,5 @@ public class Interpolator {
 
 	public void setProperties(String[] properties) {
 		this.properties = properties;
-	}
-
-	@Override
-	public String toString() {
-		return "Interpolator{" +
-				"type='" + type + '\'' +
-				", alpha=" + alpha +
-				", properties=" + Arrays.toString(properties) +
-				'}';
 	}
 }

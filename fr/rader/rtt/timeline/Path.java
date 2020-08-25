@@ -37,13 +37,4 @@ public class Path {
 	public void setInterpolators(List<Interpolator> interpolators) {
 		this.interpolators = interpolators;
 	}
-
-	@Override
-	public String toString() {
-		return "Path{" +
-				"keyframes=" + keyframes +
-				", segments=" + segments +
-				", interpolators=" + interpolators +
-				'}';
-	}
 }

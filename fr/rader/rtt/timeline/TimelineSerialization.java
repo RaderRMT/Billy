@@ -102,6 +102,8 @@ public class TimelineSerialization {
 	public Map<String, Timeline> deserialize(File timelineFile) throws IOException {
 		String replay = timelineToString(timelineFile);
 
+		if(replay == null) return null;
+
 		JsonReader reader = new JsonReader(new StringReader(replay));
 		Map<String, Timeline> timelines = new LinkedHashMap<>();
 
@@ -264,7 +266,11 @@ public class TimelineSerialization {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(timelineFile));
 
-			return reader.readLine();
+			String line = reader.readLine();
+
+			reader.close();
+
+			return line;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

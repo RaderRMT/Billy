@@ -4,6 +4,7 @@ import fr.rader.rtt.Interface;
 import fr.rader.rtt.Main;
 import fr.rader.rtt.timeline.TimelineSerialization;
 import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -13,109 +14,118 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class OpenListener implements ActionListener {
 
-	public static String REPLAY_RECORDINGS = System.getenv("APPDATA") + "\\.minecraft\\replay_recordings\\";
+	public static final String REPLAY_RECORDINGS = System.getenv("APPDATA") + "/.minecraft/replay_recordings/";
+	public static final String LEFT_SIDE = REPLAY_RECORDINGS + "extracted_timelines/left/";
+	public static final String RIGHT_SIDE = REPLAY_RECORDINGS + "extracted_timelines/right/";
 
-	private Interface theInterface;
+	private File leftReplay;
+	private File rightReplay;
 
-	private File leftFile;
-	private File rightFile;
+	private boolean hasTimeline = true;
+
+	private boolean hasNewReplay = false;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		TimelineSerialization serialization = new TimelineSerialization();
-		theInterface = Interface.getInstance();
+		Interface theInterface = Interface.getInstance();
 
-		if(e.getSource().equals(theInterface.openReplayLeft)) {
-			leftFile = openFilePrompt();
+		boolean isOpenReplayLeft = e.getSource().equals(theInterface.openReplayLeft);
 
-			if(leftFile == null) return;
+		openReplay(isOpenReplayLeft);
 
-			if(leftFile.equals(rightFile)) {
-				JOptionPane.showMessageDialog(null, "Replays must be different!");
-				return;
-			}
+		if(hasNewReplay) {
+			if(isOpenReplayLeft) {
+				if(leftReplay != null) theInterface.openReplayLeft.setText(leftReplay.getName());
 
-			theInterface.openReplayLeft.setText(leftFile.getName());
-
-			if(!leftFile.getName().equals("timelines.json")) {
 				try {
-					ZipFile zipFile = new ZipFile(leftFile);
-					zipFile.extractFile("timelines.json", REPLAY_RECORDINGS + "extractor_temp/left/");
+					if(hasTimeline) theInterface.leftTimelineList = serialization.deserialize(new File(LEFT_SIDE + "timelines.json"));
+					else if(theInterface.leftTimelineList != null && !theInterface.leftTimelineList.isEmpty()) theInterface.leftTimelineList.clear();
+					else if(theInterface.leftTimelineList == null) theInterface.leftTimelineList = new HashMap<>();
 				} catch (IOException ioException) {
-					JOptionPane.showMessageDialog(null, "\"" + leftFile.getName() + "\" does not contain a timeline!");
-					theInterface.openReplayLeft.setText("Open Replay 1");
+					JOptionPane.showMessageDialog(null, "Error while deserializing: " + ioException.getLocalizedMessage());
 					return;
 				}
 			} else {
+				if(rightReplay != null) theInterface.openReplayRight.setText(rightReplay.getName());
+
 				try {
-					Files.copy(leftFile.toPath(), new File(REPLAY_RECORDINGS + "extractor_temp/left/timelines.json").toPath(), StandardCopyOption.REPLACE_EXISTING);
+					if(hasTimeline) theInterface.rightTimelineList = serialization.deserialize(new File(RIGHT_SIDE + "timelines.json"));
+					else if(theInterface.rightTimelineList != null && !theInterface.rightTimelineList.isEmpty()) theInterface.rightTimelineList.clear();
+					else if(theInterface.rightTimelineList == null) theInterface.rightTimelineList = new HashMap<>();
 				} catch (IOException ioException) {
-					System.out.println("could not copy file");
-					ioException.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Error while deserializing: " + ioException.getLocalizedMessage());
 					return;
 				}
 			}
 
-			Main.getInstance().setLeftFile(leftFile);
+			theInterface.updateNames();
+		}
+	}
 
-			try {
-				theInterface.leftTimelineList = serialization.deserialize(new File(REPLAY_RECORDINGS + "extractor_temp/left/timelines.json"));
+	private void openReplay(boolean isOpenReplayLeft) {
+		File file = openFilePrompt();
 
-				theInterface.updateNames();
-			} catch (IOException ioException) {
-				ioException.printStackTrace();
+		if(file == null) {
+			hasNewReplay = false;
+			return;
+		}
+
+		hasNewReplay = true;
+		hasTimeline = true;
+
+		if(isOpenReplayLeft) {
+			if(file.equals(rightReplay)) {
+				hasNewReplay = false;
+				JOptionPane.showMessageDialog(null, "Replays must be different!");
+				return;
+			}
+		} else {
+			if(file.equals(leftReplay)) {
+				hasNewReplay = false;
+				JOptionPane.showMessageDialog(null, "Replays must be different!");
+				return;
 			}
 		}
 
-		if(e.getSource().equals(theInterface.openReplayRight)) {
-			rightFile = openFilePrompt();
+		if(file.getName().equals("timelines.json")) {
+			try {
+				File test = new File(((isOpenReplayLeft) ? LEFT_SIDE : RIGHT_SIDE) + "timelines.json");
+				test.getParentFile().mkdirs();
 
-			if(rightFile == null) return;
-
-			if(rightFile.equals(leftFile)) {
-				JOptionPane.showMessageDialog(null, "Replays must be different!");
+				Files.copy(file.toPath(), test.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException ioException) {
+				JOptionPane.showMessageDialog(null, "Error: " + Arrays.toString(ioException.getStackTrace()));
+				hasNewReplay = false;
 				return;
 			}
-
-			Main.getInstance().setRightFile(rightFile);
-
-			theInterface.openReplayRight.setText(rightFile.getName());
-
-			if(!rightFile.getName().equals("timelines.json")) {
-				try {
-					ZipFile zipFile = new ZipFile(rightFile);
-					zipFile.extractFile("timelines.json", REPLAY_RECORDINGS + "extractor_temp/right/");
-				} catch (IOException ignored) {
-					theInterface.rightTimelineList = new HashMap<>();
-					theInterface.rightList.setListData(new String[] {});
-					return;
-				}
-			} else {
-				try {
-					Files.copy(rightFile.toPath(), new File(REPLAY_RECORDINGS + "extractor_temp/right/timelines.json").toPath(), StandardCopyOption.REPLACE_EXISTING);
-				} catch (IOException ioException) {
-					System.out.println("could not copy file");
-					ioException.printStackTrace();
-					return;
-				}
-			}
-
+		} else if(file.getName().endsWith(".mcpr")) {
 			try {
-				theInterface.rightTimelineList = serialization.deserialize(new File(REPLAY_RECORDINGS + "extractor_temp/right/timelines.json"));
+				ZipFile mcprFile = new ZipFile(file);
+				mcprFile.extractFile("timelines.json", (isOpenReplayLeft) ? LEFT_SIDE : RIGHT_SIDE);
+			} catch (ZipException zipException) {
+				hasTimeline = false;
 
-				theInterface.updateNames();
-			} catch (IOException ioException) {
-				ioException.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Warning:\n" + zipException.getLocalizedMessage() + "\nAssuming the Replay does not contain a timeline.");
 			}
+		}
+
+		if(isOpenReplayLeft) {
+			Main.getInstance().setLeftFile(file);
+			leftReplay = file;
+		} else {
+			Main.getInstance().setRightFile(file);
+			rightReplay = file;
 		}
 	}
 
 	private File openFilePrompt() {
-		JFileChooser fileChooser = new JFileChooser(System.getenv("APPDATA") + "\\.minecraft\\replay_recordings\\");
+		JFileChooser fileChooser = new JFileChooser(REPLAY_RECORDINGS);
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		fileChooser.setMultiSelectionEnabled(false);
 		fileChooser.setFileFilter(new FileFilter() {

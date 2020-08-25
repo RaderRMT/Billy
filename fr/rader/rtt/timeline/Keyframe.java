@@ -27,12 +27,4 @@ public class Keyframe {
 	public void setProperties(Map<String, Object> properties) {
 		this.properties = properties;
 	}
-
-	@Override
-	public String toString() {
-		return "Keyframe{" +
-				"time=" + time +
-				", properties=" + properties +
-				'}';
-	}
 }
