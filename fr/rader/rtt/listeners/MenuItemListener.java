@@ -63,6 +63,7 @@ public class MenuItemListener implements ActionListener {
 				ZipFile mcprFile = new ZipFile(instanceFile);
 				mcprFile.addFile(timelinesFile);
 
+				JOptionPane.showMessageDialog(null, "Saved to " + instanceFile.getAbsolutePath().replace("/", "\\"));
 				return;
 			}
 
