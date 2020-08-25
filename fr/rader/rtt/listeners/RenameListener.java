@@ -35,6 +35,7 @@ public class RenameListener implements ActionListener {
 				if(isRenamingLeft) {
 					while(theInterface.leftTimelineList.containsKey(newTimelineName)) {
 						newTimelineName = JOptionPane.showInputDialog(null, "Enter a new name for \"" + selectedTimeline + "\" or press cancel to cancel");
+						if(newTimelineName == null) return;
 					}
 
 					theInterface.leftTimelineList.put(newTimelineName, theInterface.leftTimelineList.get(selectedTimeline));
@@ -42,6 +43,7 @@ public class RenameListener implements ActionListener {
 				} else {
 					while(theInterface.rightTimelineList.containsKey(newTimelineName)) {
 						newTimelineName = JOptionPane.showInputDialog(null, "Enter a new name for \"" + selectedTimeline + "\" or press cancel to cancel");
+						if(newTimelineName == null) return;
 					}
 
 					theInterface.rightTimelineList.put(newTimelineName, theInterface.rightTimelineList.get(selectedTimeline));

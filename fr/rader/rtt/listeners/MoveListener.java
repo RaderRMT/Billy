@@ -43,6 +43,7 @@ public class MoveListener implements ActionListener {
 					if(newTimelineName != null) {
 						while(theInterface.leftTimelineList.containsKey(newTimelineName)) {
 							newTimelineName = JOptionPane.showInputDialog(null, "Enter a new name for \"" + name + "\" or press cancel to cancel");
+							if(name == null) return;
 						}
 
 						theInterface.rightTimelineList.put(newTimelineName, theInterface.leftTimelineList.get(name));
@@ -59,6 +60,7 @@ public class MoveListener implements ActionListener {
 					if(newTimelineName != null) {
 						while(theInterface.rightTimelineList.containsKey(newTimelineName)) {
 							newTimelineName = JOptionPane.showInputDialog(null, "Enter a new name for \"" + name + "\" or press cancel to cancel");
+							if(name == null) return;
 						}
 
 						theInterface.leftTimelineList.put(newTimelineName, theInterface.rightTimelineList.get(name));
