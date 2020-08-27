@@ -7,7 +7,7 @@
 
 ## Functions
 
-* Opening Replay files (`*.mcpr`) and raw timeline files (`.json`)
+* Opening Replay files (`*.mcpr`) and raw timeline files (`*.json`)
 
 * Copying timelines from Replay to Replay
 
