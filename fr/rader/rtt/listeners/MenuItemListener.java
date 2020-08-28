@@ -116,8 +116,9 @@ public class MenuItemListener implements ActionListener {
 
 				String fileName = toReturn.getName();
 				if(toReturn.getParentFile().listFiles(pathname -> pathname.getName().equals(fileName)).length != 0) {
-					JOptionPane.showMessageDialog(null, "A timeline with this name already exists");
-					continue;
+					if(JOptionPane.showConfirmDialog(null, "A timeline with this name already exists, do you want to overwrite it?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+						continue;
+					}
 				}
 
 				lastFolderOpened = toReturn.getParentFile();

@@ -7,23 +7,25 @@ import fr.rader.rtt.timeline.Timeline;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
 public class CopyListener implements ActionListener {
 
 	private Interface theInterface;
+	private File selectedSide;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		theInterface = Interface.getInstance();
 
 		if(e.getSource().equals(theInterface.copyRight)) {
-			if(Main.getInstance().getLeftFile() == null) return;
+			if((selectedSide = Main.getInstance().getRightFile()) == null || Main.getInstance().getLeftFile() == null) return;
 
 			copyToList(theInterface.leftList.getSelectedValuesList(), theInterface.leftTimelineList, theInterface.rightTimelineList);
 		} else {
-			if(Main.getInstance().getRightFile() == null) return;
+			if((selectedSide = Main.getInstance().getLeftFile()) == null || Main.getInstance().getRightFile() == null) return;
 
 			copyToList(theInterface.rightList.getSelectedValuesList(), theInterface.rightTimelineList, theInterface.leftTimelineList);
 		}
@@ -35,7 +37,7 @@ public class CopyListener implements ActionListener {
 
 			String oldName = name;
 			while(toList.containsKey(name)) {
-				name = JOptionPane.showInputDialog(null, "\"" + Main.getInstance().getRightFile().getName() + "\" already contains a timeline named \"" + name + "\"\nEnter a new name or press cancel to cancel");
+				name = JOptionPane.showInputDialog(null, "\"" + selectedSide.getName() + "\" already contains a timeline named \"" + name + "\"\nEnter a new name or press cancel to cancel");
 			}
 
 			if(name == null) continue;
