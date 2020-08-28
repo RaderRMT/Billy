@@ -136,11 +136,12 @@ public class TimelineSerialization {
 					switch(reader.nextName()) {
 						case "keyframes":
 							long time = 0;
-							Map<String, Object> keyframeProperties = new HashMap<>();
 
 							// Read Keyframe
 							reader.beginArray();
 							while(reader.hasNext()) {
+								Map<String, Object> keyframeProperties = new HashMap<>();
+
 								reader.beginObject();
 								while(reader.hasNext()) {
 									switch(reader.nextName()) {
@@ -242,7 +243,7 @@ public class TimelineSerialization {
 											break;
 									}
 								}
-
+								
 								interpolators.add(new Interpolator(type, alpha, cameraProperties));
 
 								reader.endObject();
