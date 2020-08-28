@@ -71,12 +71,12 @@ public class TimelineSerialization {
 					writer.beginObject();
 					writer.name("type");
 
-					if(interpolator.getAlpha() == -1) {
+					if(interpolator.getAlpha() == null) {
 						writer.value(interpolator.getType());
 					} else {
 						writer.beginObject();
 						writer.name("type").value(interpolator.getType());
-						writer.name("alpha").value(interpolator.getAlpha());
+						writer.name("alpha").value(Double.parseDouble(interpolator.getAlpha()));
 
 						writer.endObject();
 					}
@@ -204,7 +204,7 @@ public class TimelineSerialization {
 							reader.beginArray();
 							while(reader.hasNext()) {
 								String type = null;
-								double alpha = -1;
+								String alpha = null;
 								String[] cameraProperties = new String[2];
 
 								// Read interpolator
@@ -220,7 +220,7 @@ public class TimelineSerialization {
 															type = reader.nextString();
 															break;
 														case "alpha":
-															alpha = reader.nextDouble();
+															alpha = String.valueOf(reader.nextDouble());
 															break;
 													}
 												}
@@ -243,7 +243,7 @@ public class TimelineSerialization {
 											break;
 									}
 								}
-								
+
 								interpolators.add(new Interpolator(type, alpha, cameraProperties));
 
 								reader.endObject();
