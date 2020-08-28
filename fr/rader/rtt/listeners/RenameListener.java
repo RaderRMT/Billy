@@ -37,7 +37,7 @@ public class RenameListener implements ActionListener {
 				newTimelineName = JOptionPane.showInputDialog(null, "Enter a new name for \"" + selectedTimeline + "\" or press cancel to cancel");
 			}
 
-			if(newTimelineName == null) return;
+			if(newTimelineName == null) continue;
 
 			timelineList.put(newTimelineName, timelineList.get(selectedTimeline));
 			timelineList.remove(selectedTimeline);

@@ -42,7 +42,7 @@ public class MoveListener implements ActionListener {
 				name = JOptionPane.showInputDialog(null, "\"" + Main.getInstance().getRightFile().getName() + "\" already contains a timeline named \"" + name + "\"\nEnter a new name or press cancel to cancel");
 			}
 
-			if(name == null) return;
+			if(name == null) continue;
 
 			toList.put(name, fromList.get(oldName));
 			fromList.remove(oldName);
