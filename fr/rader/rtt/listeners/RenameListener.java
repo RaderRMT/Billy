@@ -31,10 +31,10 @@ public class RenameListener implements ActionListener {
 
 	private void renameTimelines(List<String> selectedTimelines, Map<String, Timeline> timelineList) {
 		for(String selectedTimeline : selectedTimelines) {
-			String newTimelineName = JOptionPane.showInputDialog(null, "Enter a new name for \"" + selectedTimeline + "\" or press cancel to cancel");
+			String newTimelineName = JOptionPane.showInputDialog(null, "Enter a new name for \"" + selectedTimeline + "\" or press cancel to cancel", selectedTimeline);
 
 			while(timelineList.containsKey(newTimelineName)) {
-				newTimelineName = JOptionPane.showInputDialog(null, "Enter a new name for \"" + selectedTimeline + "\" or press cancel to cancel");
+				newTimelineName = JOptionPane.showInputDialog(null, "Enter a new name for \"" + selectedTimeline + "\" or press cancel to cancel", selectedTimeline);
 			}
 
 			if(newTimelineName == null) continue;

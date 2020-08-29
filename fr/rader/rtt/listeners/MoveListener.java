@@ -37,7 +37,7 @@ public class MoveListener implements ActionListener {
 
 			String oldName = name;
 			while(toList.containsKey(name)) {
-				name = JOptionPane.showInputDialog(null, "\"" + selectedSide.getName() + "\" already contains a timeline named \"" + name + "\"\nEnter a new name or press cancel to cancel");
+				name = JOptionPane.showInputDialog(null, "\"" + selectedSide.getName() + "\" already contains a timeline named \"" + name + "\"\nEnter a new name or press cancel to cancel", oldName);
 			}
 
 			if(name == null) continue;
