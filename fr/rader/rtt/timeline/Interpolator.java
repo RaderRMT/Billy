@@ -3,17 +3,12 @@ package fr.rader.rtt.timeline;
 public class Interpolator {
 
 	private String type;
-	private String alpha = null;
+	private String alpha;
 	private String[] properties;
 
 	public Interpolator(String type, String alpha, String[] properties) {
 		this.type = type;
 		this.alpha = alpha;
-		this.properties = properties;
-	}
-
-	public Interpolator(String type, String[] properties) {
-		this.type = type;
 		this.properties = properties;
 	}
 
