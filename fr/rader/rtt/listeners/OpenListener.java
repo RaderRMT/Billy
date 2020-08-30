@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class OpenListener implements ActionListener {
@@ -29,7 +28,6 @@ public class OpenListener implements ActionListener {
 	private File rightReplay;
 
 	private boolean hasTimeline = true;
-
 	private boolean hasNewReplay = false;
 
 	@Override
@@ -94,7 +92,7 @@ public class OpenListener implements ActionListener {
 
 				Files.copy(file.toPath(), timelineFolder.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			} catch (IOException ioException) {
-				JOptionPane.showMessageDialog(null, "Error: " + Arrays.toString(ioException.getStackTrace()));
+				JOptionPane.showMessageDialog(null, "Error: " + ioException.getLocalizedMessage());
 				hasNewReplay = false;
 				return;
 			}

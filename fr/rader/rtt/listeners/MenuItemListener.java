@@ -46,7 +46,7 @@ public class MenuItemListener implements ActionListener {
 					break;
 			}
 		} catch (IOException ioException) {
-			ioException.printStackTrace();
+			JOptionPane.showMessageDialog(null, ioException.getLocalizedMessage());
 		}
 	}
 
