@@ -40,6 +40,10 @@ public class TimelineSerialization {
 							writer.name("timestamp").value((Integer) property.getValue());
 						}
 
+						if(property.getKey().equals("spectate")) {
+							writer.name("spectate").value((Integer) property.getValue());
+						}
+
 						if(property.getKey().equals("camera:rotation") || property.getKey().equals("camera:position")) {
 							writer.name(property.getKey()).beginArray();
 
@@ -136,11 +140,12 @@ public class TimelineSerialization {
 					switch(reader.nextName()) {
 						case "keyframes":
 							long time = 0;
+							Map<String, Object> keyframeProperties;
 
 							// Read Keyframe
 							reader.beginArray();
 							while(reader.hasNext()) {
-								Map<String, Object> keyframeProperties = new HashMap<>();
+								keyframeProperties = new HashMap<>();
 
 								reader.beginObject();
 								while(reader.hasNext()) {
@@ -157,6 +162,10 @@ public class TimelineSerialization {
 												switch(nextName) {
 													case "timestamp":
 														keyframeProperties.put("timestamp", reader.nextInt());
+														break;
+
+													case "spectate":
+														keyframeProperties.put("spectate", reader.nextInt());
 														break;
 
 													case "camera:rotation":
