@@ -1,8 +1,8 @@
-package fr.rader.rtt.gui.inspector;
+package fr.rader.billy.gui.inspector;
 
-import fr.rader.rtt.gui.inspector.listeners.*;
-import fr.rader.rtt.timeline.Path;
-import fr.rader.rtt.timeline.Timeline;
+import fr.rader.billy.gui.inspector.listeners.*;
+import fr.rader.billy.timeline.Path;
+import fr.rader.billy.timeline.Timeline;
 
 import javax.swing.*;
 

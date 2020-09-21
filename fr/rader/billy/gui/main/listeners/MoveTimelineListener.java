@@ -1,7 +1,7 @@
-package fr.rader.rtt.gui.main.listeners;
+package fr.rader.billy.gui.main.listeners;
 
-import fr.rader.rtt.gui.main.MainInterface;
-import fr.rader.rtt.timeline.Timeline;
+import fr.rader.billy.gui.main.MainInterface;
+import fr.rader.billy.timeline.Timeline;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
 
-public class CopyTimelineListener implements ActionListener {
+public class MoveTimelineListener implements ActionListener {
 
 	private MainInterface mainInterface;
 
@@ -19,20 +19,20 @@ public class CopyTimelineListener implements ActionListener {
 
 		if(mainInterface.rightTimelineList == null || mainInterface.leftTimelineList == null) return;
 
-		if(e.getSource().equals(mainInterface.copyToRightButton)) {
-			copyToList(mainInterface.leftNameList.getSelectedValuesList(),
+		if(e.getSource().equals(mainInterface.moveToRightButton)) {
+			moveToList(mainInterface.leftNameList.getSelectedValuesList(),
 					mainInterface.leftTimelineList,
 					mainInterface.rightTimelineList,
 					mainInterface.openRightReplayButton.getText());
 		} else {
-			copyToList(mainInterface.rightNameList.getSelectedValuesList(),
+			moveToList(mainInterface.rightNameList.getSelectedValuesList(),
 					mainInterface.rightTimelineList,
 					mainInterface.leftTimelineList,
 					mainInterface.openLeftReplayButton.getText());
 		}
 	}
 
-	private void copyToList(List<String> selectedTimelines, Map<String, Timeline> fromList, Map<String, Timeline> toList, String replayName) {
+	private void moveToList(List<String> selectedTimelines, Map<String, Timeline> fromList, Map<String, Timeline> toList, String replayName) {
 		if(replayName.equals("Open Replay")) return;
 
 		for(String name : selectedTimelines) {
@@ -44,6 +44,7 @@ public class CopyTimelineListener implements ActionListener {
 			if(name == null) continue;
 
 			toList.put(name, fromList.get(oldName));
+			fromList.remove(oldName);
 		}
 
 		mainInterface.updateNames();

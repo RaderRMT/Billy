@@ -1,10 +1,8 @@
-package fr.rader.rtt.gui.inspector.listeners;
+package fr.rader.billy.gui.inspector.listeners;
 
-import fr.rader.rtt.gui.inspector.TimelineInspector;
-import fr.rader.rtt.gui.main.MainInterface;
-import fr.rader.rtt.timeline.Keyframe;
+import fr.rader.billy.gui.inspector.TimelineInspector;
+import fr.rader.billy.timeline.Keyframe;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;

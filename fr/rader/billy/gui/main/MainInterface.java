@@ -1,7 +1,7 @@
-package fr.rader.rtt.gui.main;
+package fr.rader.billy.gui.main;
 
-import fr.rader.rtt.gui.main.listeners.*;
-import fr.rader.rtt.timeline.Timeline;
+import fr.rader.billy.gui.main.listeners.*;
+import fr.rader.billy.timeline.Timeline;
 
 import javax.swing.*;
 import java.util.ArrayList;

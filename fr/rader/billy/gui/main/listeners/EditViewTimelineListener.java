@@ -1,7 +1,7 @@
-package fr.rader.rtt.gui.main.listeners;
+package fr.rader.billy.gui.main.listeners;
 
-import fr.rader.rtt.gui.inspector.TimelineInspector;
-import fr.rader.rtt.gui.main.MainInterface;
+import fr.rader.billy.gui.inspector.TimelineInspector;
+import fr.rader.billy.gui.main.MainInterface;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
