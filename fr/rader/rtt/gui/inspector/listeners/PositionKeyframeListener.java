@@ -14,6 +14,8 @@ public class PositionKeyframeListener implements ActionListener {
 
 		TimelineInspector timelineInspector = TimelineInspector.getInstance();
 
+		if(timelineInspector.positionPath.getKeyframes().size() == 0) return;
+
 		timelineInspector.timestampField.setText(String.valueOf(timelineInspector.positionPath.getKeyframes().get(selectedType).getTime()));
 
 		double[] rotation = (double[]) timelineInspector.positionPath.getKeyframes().get(selectedType).getProperties().get("camera:rotation");
