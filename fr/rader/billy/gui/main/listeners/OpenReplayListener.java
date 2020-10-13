@@ -162,6 +162,6 @@ public class OpenReplayListener implements ActionListener {
 
 	public static void refreshRight() {
 		hasNewReplay = true;
-		startLoadingReplay(RIGHT_SIDE, true);
+		startLoadingReplay(RIGHT_SIDE, false);
 	}
 }
