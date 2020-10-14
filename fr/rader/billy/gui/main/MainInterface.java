@@ -63,6 +63,7 @@ public class MainInterface {
 
 		EditViewTimelineListener editViewTimelineListener = new EditViewTimelineListener();
 		editLeftTimelineButton.addActionListener(editViewTimelineListener);
+		editRightTimelineButton.addActionListener(editViewTimelineListener);
 
 		SaveReplayListener saveReplayListener = new SaveReplayListener();
 		saveLeftReplayButton.addActionListener(saveReplayListener);

@@ -48,9 +48,9 @@ public class OpenReplayListener implements ActionListener {
 
 	private static void startLoadingReplay(String side, boolean isOpenLeft) {
 		if(hasNewReplay) {
-			if(isOpenLeft && files[1] != null) { // left side
+			if(isOpenLeft && !files[1].equals(new File(""))) { // left side
 				mainInterface.openLeftReplayButton.setText(files[1].getName());
-			} else if(!isOpenLeft && files[2] != null) { // right side
+			} else if(!isOpenLeft && !files[2].equals(new File(""))) { // right side
 				mainInterface.openRightReplayButton.setText(files[2].getName());
 			}
 
@@ -78,7 +78,7 @@ public class OpenReplayListener implements ActionListener {
 		}
 	}
 
-	private void openReplay(File file, String side) {
+	private static void openReplay(File file, String side) {
 		if(file == null) {
 			hasNewReplay = false;
 			return;
@@ -156,12 +156,18 @@ public class OpenReplayListener implements ActionListener {
 	}
 
 	public static void refreshLeft() {
-		hasNewReplay = true;
-		startLoadingReplay(LEFT_SIDE, true);
+		if(!files[1].equals(new File(""))) {
+			hasNewReplay = true;
+			openReplay(files[1], LEFT_SIDE);
+			startLoadingReplay(LEFT_SIDE, true);
+		}
 	}
 
 	public static void refreshRight() {
-		hasNewReplay = true;
-		startLoadingReplay(RIGHT_SIDE, false);
+		if(!files[2].equals(new File(""))) {
+			hasNewReplay = true;
+			openReplay(files[2], RIGHT_SIDE);
+			startLoadingReplay(RIGHT_SIDE, false);
+		}
 	}
 }
