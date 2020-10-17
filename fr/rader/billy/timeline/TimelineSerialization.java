@@ -44,6 +44,10 @@ public class TimelineSerialization {
 							writer.name("spectate").value((Integer) property.getValue());
 						}
 
+						if(property.getKey().equals("interpolationFixed")) {
+							writer.name("interpolationFixed").nullValue();
+						}
+
 						if(property.getKey().equals("camera:rotation") || property.getKey().equals("camera:position")) {
 							writer.name(property.getKey()).beginArray();
 
@@ -166,6 +170,12 @@ public class TimelineSerialization {
 
 													case "spectate":
 														keyframeProperties.put("spectate", reader.nextInt());
+														break;
+
+													case "interpolationFixed":
+														keyframeProperties.put("interpolationFixed", null);
+														reader.nextNull();
+														System.out.println("parsed null");
 														break;
 
 													case "camera:rotation":

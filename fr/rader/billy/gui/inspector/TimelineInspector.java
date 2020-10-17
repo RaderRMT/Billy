@@ -97,11 +97,11 @@ public class TimelineInspector {
 
 		shiftReplayTimestampsButton.addActionListener(new ShiftReplayTimestampListener());
 
-		for(int x = 0; x < timePath.getKeyframes().size(); x++) {
+		for(int x = 0; x < positionPath.getKeyframes().size(); x++) {
 			selectedKeyframeCombo.addItem(String.valueOf(x));
 		}
 
-		for(int x = 0; x < positionPath.getKeyframes().size(); x++) {
+		for(int x = 0; x < timePath.getKeyframes().size(); x++) {
 			selectedTimeKeyframeCombo.addItem(String.valueOf(x));
 		}
 	}
