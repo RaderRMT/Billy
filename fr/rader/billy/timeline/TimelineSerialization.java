@@ -175,7 +175,6 @@ public class TimelineSerialization {
 													case "interpolationFixed":
 														keyframeProperties.put("interpolationFixed", null);
 														reader.nextNull();
-														System.out.println("parsed null");
 														break;
 
 													case "camera:rotation":
