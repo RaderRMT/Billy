@@ -1,15 +1,20 @@
 package fr.rader.billy.gui.main.listeners;
 
+import fr.rader.billy.Logger;
+import fr.rader.billy.Main;
 import fr.rader.billy.gui.main.MainInterface;
 import fr.rader.billy.timeline.Timeline;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class MoveTimelineListener implements ActionListener {
+
+	private Logger logger = Main.getInstance().getLogger();
 
 	private MainInterface mainInterface;
 
@@ -34,6 +39,8 @@ public class MoveTimelineListener implements ActionListener {
 
 	private void moveToList(List<String> selectedTimelines, Map<String, Timeline> fromList, Map<String, Timeline> toList, String replayName) {
 		if(replayName.equals("Open Replay")) return;
+
+		logger.writeln("Moving timelines " + Arrays.toString(selectedTimelines.toArray()) + " to '" + replayName + "'");
 
 		for(String name : selectedTimelines) {
 			String oldName = name;

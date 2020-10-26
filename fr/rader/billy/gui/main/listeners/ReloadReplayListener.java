@@ -9,7 +9,6 @@ public class ReloadReplayListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
 		if(e.getSource().equals(MainInterface.getInstance().reloadLeftReplayButton)) {
 			OpenReplayListener.refreshLeft();
 		} else {

@@ -2,98 +2,111 @@ package fr.rader.billy.timeline;
 
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import fr.rader.billy.Logger;
+import fr.rader.billy.Main;
 
 import java.io.*;
 import java.util.*;
 
 public class TimelineSerialization {
 
-	public String serialize(Map<String, Timeline> timelines) throws IOException {
+	private Logger logger = Main.getInstance().getLogger();
+
+	public String serialize(Map<String, Timeline> timelines) {
 		StringWriter stringWriter = new StringWriter();
 		JsonWriter writer = new JsonWriter(stringWriter);
 
+		logger.writeln("Started serializing timelines");
+
 		// writing timeline
-		writer.beginObject();
-		for(Map.Entry<String, Timeline> entry : timelines.entrySet()) {
-			Timeline timeline = entry.getValue();
+		try {
+			writer.beginObject();
+			for(Map.Entry<String, Timeline> entry : timelines.entrySet()) {
+				logger.writeln("Serializing timeline '" + entry.getKey() + "'");
 
-			String timelineName = entry.getKey();
-			if(timelineName.equals("\uD835\uDE25\uD835\uDE26\uD835\uDE27\uD835\uDE22\uD835\uDE36\uD835\uDE2D\uD835\uDE35")) {
-				timelineName = "";
-			}
+				Timeline timeline = entry.getValue();
 
-			writer.name(timelineName).beginArray();
+				String timelineName = entry.getKey();
+				if(timelineName.equals("\uD835\uDE25\uD835\uDE26\uD835\uDE27\uD835\uDE22\uD835\uDE36\uD835\uDE2D\uD835\uDE35")) {
+					timelineName = "";
+				}
 
-			// writing paths
-			for(Path path : timeline.getPaths()) {
-				writer.beginObject();
-				writer.name("keyframes").beginArray();
+				writer.name(timelineName).beginArray();
 
-				// writing keyframes
-				for(Keyframe keyframe : path.getKeyframes()) {
+				// writing paths
+				for(Path path : timeline.getPaths()) {
 					writer.beginObject();
-					writer.name("time").value(keyframe.getTime());
-					writer.name("properties").beginObject();
+					writer.name("keyframes").beginArray();
 
-					for(Map.Entry<String, Object> property : keyframe.getProperties().entrySet()) {
-						if(property.getKey().equals("timestamp")) {
-							writer.name("timestamp").value((Integer) property.getValue());
-						}
+					// writing keyframes
+					for(Keyframe keyframe : path.getKeyframes()) {
+						writer.beginObject();
+						writer.name("time").value(keyframe.getTime());
+						writer.name("properties").beginObject();
 
-						if(property.getKey().equals("spectate")) {
-							writer.name("spectate").value((Integer) property.getValue());
-						}
-
-						if(property.getKey().equals("interpolationFixed")) {
-							writer.name("interpolationFixed").nullValue();
-						}
-
-						if(property.getKey().equals("camera:rotation") || property.getKey().equals("camera:position")) {
-							writer.name(property.getKey()).beginArray();
-
-							for(double value : (double[]) property.getValue()) {
-								writer.value(value);
+						for(Map.Entry<String, Object> property : keyframe.getProperties().entrySet()) {
+							if(property.getKey().equals("timestamp")) {
+								writer.name("timestamp").value((Integer) property.getValue());
 							}
 
-							writer.endArray();
+							if(property.getKey().equals("spectate")) {
+								writer.name("spectate").value((Integer) property.getValue());
+							}
+
+							if(property.getKey().equals("interpolationFixed")) {
+								writer.name("interpolationFixed").nullValue();
+							}
+
+							if(property.getKey().equals("camera:rotation") || property.getKey().equals("camera:position")) {
+								writer.name(property.getKey()).beginArray();
+
+								for(double value : (double[]) property.getValue()) {
+									writer.value(value);
+								}
+
+								writer.endArray();
+							}
 						}
-					}
 
-					writer.endObject();
-					writer.endObject();
-				}
-
-				writer.endArray();
-
-				// writing segments
-				writer.name("segments").beginArray();
-				for(int segment : path.getSegments()) {
-					writer.value(segment);
-				}
-
-				writer.endArray();
-
-				// writing interpolators
-				writer.name("interpolators").beginArray();
-				for(Interpolator interpolator : path.getInterpolators()) {
-					writer.beginObject();
-					writer.name("type");
-
-					if(interpolator.getAlpha() == null) {
-						writer.value(interpolator.getType());
-					} else {
-						writer.beginObject();
-						writer.name("type").value(interpolator.getType());
-						writer.name("alpha").value(Double.parseDouble(interpolator.getAlpha()));
-
+						writer.endObject();
 						writer.endObject();
 					}
 
-					writer.name("properties").beginArray();
-					for(String property : interpolator.getProperties()) {
-						if(property != null) {
-							writer.value(property);
+					writer.endArray();
+
+					// writing segments
+					writer.name("segments").beginArray();
+					for(int segment : path.getSegments()) {
+						writer.value(segment);
+					}
+
+					writer.endArray();
+
+					// writing interpolators
+					writer.name("interpolators").beginArray();
+					for(Interpolator interpolator : path.getInterpolators()) {
+						writer.beginObject();
+						writer.name("type");
+
+						if(interpolator.getAlpha() == null) {
+							writer.value(interpolator.getType());
+						} else {
+							writer.beginObject();
+							writer.name("type").value(interpolator.getType());
+							writer.name("alpha").value(Double.parseDouble(interpolator.getAlpha()));
+
+							writer.endObject();
 						}
+
+						writer.name("properties").beginArray();
+						for(String property : interpolator.getProperties()) {
+							if(property != null) {
+								writer.value(property);
+							}
+						}
+
+						writer.endArray();
+						writer.endObject();
 					}
 
 					writer.endArray();
@@ -101,19 +114,20 @@ public class TimelineSerialization {
 				}
 
 				writer.endArray();
-				writer.endObject();
 			}
 
-			writer.endArray();
-		}
+			writer.endObject();
+			writer.flush();
 
-		writer.endObject();
-		writer.flush();
+			logger.writeln("Done!");
+		} catch (Exception exception) {
+			logger.exception(exception);
+		}
 
 		return stringWriter.toString();
 	}
 
-	public Map<String, Timeline> deserialize(File timelineFile) throws IOException {
+	public Map<String, Timeline> deserialize(File timelineFile) {
 		String replay = timelineToString(timelineFile);
 
 		if(replay == null) return null;
@@ -121,168 +135,206 @@ public class TimelineSerialization {
 		JsonReader reader = new JsonReader(new StringReader(replay));
 		Map<String, Timeline> timelines = new LinkedHashMap<>();
 
-		reader.beginObject();
-		while(reader.hasNext()) {
-			String timelineName = reader.nextName();
+		logger.writeln("Started deserializing timelines");
+		logger.clearUnusedFields();
 
-			if(timelineName.equals("")) {
-				timelineName = "\uD835\uDE25\uD835\uDE26\uD835\uDE27\uD835\uDE22\uD835\uDE36\uD835\uDE2D\uD835\uDE35";
-			}
-
-			List<Path> paths = new ArrayList<>();
-
-			// Read timelines
-			reader.beginArray();
+		try {
+			reader.beginObject();
 			while(reader.hasNext()) {
-				List<Keyframe> keyframes = new ArrayList<>();
-				List<Integer> segments = new ArrayList<>();
-				List<Interpolator> interpolators = new ArrayList<>();
+				String timelineName = reader.nextName();
 
-				// Read Paths
-				reader.beginObject();
+				if(timelineName.equals("")) {
+					timelineName = "\uD835\uDE25\uD835\uDE26\uD835\uDE27\uD835\uDE22\uD835\uDE36\uD835\uDE2D\uD835\uDE35";
+				}
+
+				List<Path> paths = new ArrayList<>();
+
+				logger.writeln("Deserializing timeline '" + timelineName + "'");
+
+				// Read timelines
+				reader.beginArray();
 				while(reader.hasNext()) {
-					switch(reader.nextName()) {
-						case "keyframes":
-							long time = 0;
-							Map<String, Object> keyframeProperties;
+					List<Keyframe> keyframes = new ArrayList<>();
+					List<Integer> segments = new ArrayList<>();
+					List<Interpolator> interpolators = new ArrayList<>();
 
-							// Read Keyframe
-							reader.beginArray();
-							while(reader.hasNext()) {
-								keyframeProperties = new HashMap<>();
+					// Read Paths
+					reader.beginObject();
+					while(reader.hasNext()) {
+						switch(reader.nextName()) {
+							case "keyframes":
+								long time = 0;
+								Map<String, Object> keyframeProperties;
 
-								reader.beginObject();
+								// Read Keyframe
+								reader.beginArray();
 								while(reader.hasNext()) {
-									switch(reader.nextName()) {
-										case "time":
-											time = reader.nextLong();
-											break;
+									keyframeProperties = new HashMap<>();
 
-										case "properties":
-											reader.beginObject();
-											while(reader.hasNext()) {
-												String nextName = reader.nextName();
+									reader.beginObject();
+									while(reader.hasNext()) {
+										String nextName = reader.nextName();
 
-												switch(nextName) {
-													case "timestamp":
-														keyframeProperties.put("timestamp", reader.nextInt());
-														break;
+										switch(nextName) {
+											case "time":
+												time = reader.nextLong();
+												break;
 
-													case "spectate":
-														keyframeProperties.put("spectate", reader.nextInt());
-														break;
-
-													case "interpolationFixed":
-														keyframeProperties.put("interpolationFixed", null);
-														reader.nextNull();
-														break;
-
-													case "camera:rotation":
-													case "camera:position":
-														double[] cameraProperties = new double[3];
-														byte i = 0;
-
-														reader.beginArray();
-														while(reader.hasNext()) {
-															cameraProperties[i] = reader.nextDouble();
-															i++;
-														}
-
-														keyframeProperties.put(nextName, cameraProperties);
-
-														reader.endArray();
-														break;
-												}
-											}
-
-											reader.endObject();
-
-											break;
-									}
-								}
-
-								keyframes.add(new Keyframe(time, keyframeProperties));
-
-								reader.endObject();
-							}
-
-							reader.endArray();
-							break;
-
-						case "segments":
-							reader.beginArray();
-							while(reader.hasNext()) {
-								segments.add(reader.nextInt());
-							}
-
-							reader.endArray();
-							break;
-
-						case "interpolators":
-							reader.beginArray();
-							while(reader.hasNext()) {
-								String type = null;
-								String alpha = null;
-								String[] cameraProperties = new String[2];
-
-								// Read interpolator
-								reader.beginObject();
-								while(reader.hasNext()) {
-									switch(reader.nextName()) {
-										case "type":
-											try {
+											case "properties":
 												reader.beginObject();
 												while(reader.hasNext()) {
-													switch(reader.nextName()) {
-														case "type":
-															type = reader.nextString();
+													String nextNameProperty = reader.nextName();
+
+													switch(nextNameProperty) {
+														case "timestamp":
+															keyframeProperties.put("timestamp", reader.nextInt());
 															break;
-														case "alpha":
-															alpha = String.valueOf(reader.nextDouble());
+
+														case "spectate":
+															keyframeProperties.put("spectate", reader.nextInt());
+															break;
+
+														case "interpolationFixed":
+															keyframeProperties.put("interpolationFixed", null);
+															reader.nextNull();
+															break;
+
+														case "camera:rotation":
+														case "camera:position":
+															double[] cameraProperties = new double[3];
+															byte i = 0;
+
+															reader.beginArray();
+															while(reader.hasNext()) {
+																cameraProperties[i] = reader.nextDouble();
+																i++;
+															}
+
+															keyframeProperties.put(nextNameProperty, cameraProperties);
+
+															reader.endArray();
+															break;
+
+														default:
+															logger.writeln("Found unused field in code (keyframe property): " + nextNameProperty);
+															logger.addUnusedField(nextNameProperty);
 															break;
 													}
 												}
 
 												reader.endObject();
-											} catch(IllegalStateException e) {
-												type = reader.nextString();
-											}
-											break;
-										case "properties":
-											byte i = 0;
 
-											reader.beginArray();
-											while(reader.hasNext()) {
-												cameraProperties[i] = reader.nextString();
-												i++;
-											}
+												break;
 
-											reader.endArray();
-											break;
+											default:
+												logger.writeln("Found unused field in code (keyframe): " + nextName);
+												logger.addUnusedField(nextName);
+												break;
+										}
 									}
+
+									keyframes.add(new Keyframe(time, keyframeProperties));
+
+									reader.endObject();
 								}
 
-								interpolators.add(new Interpolator(type, alpha, cameraProperties));
+								reader.endArray();
+								break;
 
-								reader.endObject();
-							}
+							case "segments":
+								reader.beginArray();
+								while(reader.hasNext()) {
+									segments.add(reader.nextInt());
+								}
 
-							reader.endArray();
-							break;
+								reader.endArray();
+								break;
+
+							case "interpolators":
+								reader.beginArray();
+								while(reader.hasNext()) {
+									String type = null;
+									String alpha = null;
+									String[] cameraProperties = new String[2];
+
+									// Read interpolator
+									reader.beginObject();
+									while(reader.hasNext()) {
+										String nextName = reader.nextName();
+
+										switch(nextName) {
+											case "type":
+												try {
+													reader.beginObject();
+													while(reader.hasNext()) {
+														String nextNameType = reader.nextName();
+
+														switch(nextNameType) {
+															case "type":
+																type = reader.nextString();
+																break;
+															case "alpha":
+																alpha = String.valueOf(reader.nextDouble());
+																break;
+
+															default:
+																logger.writeln("Found unused field in code (interpolator type): " + nextNameType);
+																logger.addUnusedField(nextNameType);
+																break;
+														}
+													}
+
+													reader.endObject();
+												} catch(IllegalStateException e) {
+													type = reader.nextString();
+												}
+												break;
+											case "properties":
+												byte i = 0;
+
+												reader.beginArray();
+												while(reader.hasNext()) {
+													cameraProperties[i] = reader.nextString();
+													i++;
+												}
+
+												reader.endArray();
+												break;
+
+											default:
+												logger.writeln("Found unused field in code (interpolator): " + nextName);
+												logger.addUnusedField(nextName);
+												break;
+										}
+									}
+
+									interpolators.add(new Interpolator(type, alpha, cameraProperties));
+
+									reader.endObject();
+								}
+
+								reader.endArray();
+								break;
+						}
 					}
+
+					reader.endObject();
+
+					paths.add(new Path(keyframes, segments, interpolators));
 				}
 
-				reader.endObject();
+				reader.endArray();
 
-				paths.add(new Path(keyframes, segments, interpolators));
+				timelines.put(timelineName, new Timeline(paths));
 			}
 
-			reader.endArray();
+			reader.endObject();
 
-			timelines.put(timelineName, new Timeline(paths));
+			logger.writeln("Done!");
+			logger.printUnused(replay);
+		} catch (Exception exception) {
+			logger.exception(exception, replay);
 		}
-
-		reader.endObject();
 
 		return timelines;
 	}
@@ -297,7 +349,7 @@ public class TimelineSerialization {
 
 			return line;
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.exception(e);
 		}
 
 		return null;

@@ -1,12 +1,17 @@
 package fr.rader.billy.gui.inspector.listeners;
 
+import fr.rader.billy.Logger;
+import fr.rader.billy.Main;
 import fr.rader.billy.gui.inspector.TimelineInspector;
 import fr.rader.billy.timeline.Keyframe;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class TranslateTimelineListener implements ActionListener {
+
+	private Logger logger = Main.getInstance().getLogger();
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -22,6 +27,8 @@ public class TranslateTimelineListener implements ActionListener {
 			position[0] += diffX;
 			position[1] += diffY;
 			position[2] += diffZ;
+
+			logger.writeln("Translating timeline: " + Arrays.toString(position));
 		}
 
 		timelineInspector.xField.setText(String.valueOf(Double.parseDouble(timelineInspector.xField.getText()) + diffX));

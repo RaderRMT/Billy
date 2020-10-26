@@ -1,15 +1,20 @@
 package fr.rader.billy.gui.main.listeners;
 
+import fr.rader.billy.Logger;
+import fr.rader.billy.Main;
 import fr.rader.billy.gui.main.MainInterface;
 import fr.rader.billy.timeline.Timeline;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class RenameTimelineListener implements ActionListener {
+
+	private Logger logger = Main.getInstance().getLogger();
 
 	private MainInterface mainInterface;
 
@@ -29,6 +34,8 @@ public class RenameTimelineListener implements ActionListener {
 	}
 
 	private void renameTimelines(List<String> selectedTimelines, Map<String, Timeline> timelineList) {
+		logger.writeln("Renaming timelines " + Arrays.toString(selectedTimelines.toArray()));
+
 		for(String selectedTimeline : selectedTimelines) {
 			String newTimelineName = JOptionPane.showInputDialog(null, "Enter a new name for \"" + selectedTimeline + "\" or press cancel to cancel", selectedTimeline);
 

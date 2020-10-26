@@ -11,9 +11,21 @@ public class Main {
 
 	private static Main instance;
 
+	private Logger logger = new Logger();
+
 	public JCheckBoxMenuItem saveToDefaultFolder;
 
 	private void start() {
+		if(!logger.logExists()) {
+			logger.createLog();
+		} else {
+			logger.clearLog();
+		}
+
+		logger.writeln("Starting Billy");
+		logger.writeln("Current date is: " + logger.currentDate());
+
+		logger.writeln("Checking folders...");
 		// Check if every folders exists
 		File toCheck = new File(OpenReplayListener.REPLAY_RECORDINGS);
 		if(!toCheck.exists()) JOptionPane.showMessageDialog(null, "The replay_recordings folder does not exist.");
@@ -24,6 +36,7 @@ public class Main {
 		toCheck = new File(OpenReplayListener.RIGHT_SIDE);
 		if(!toCheck.exists()) toCheck.mkdirs();
 
+		logger.writeln("Creating interface");
 		createInterface();
 	}
 
@@ -95,5 +108,9 @@ public class Main {
 
 	public static Main getInstance() {
 		return instance;
+	}
+
+	public Logger getLogger() {
+		return this.logger;
 	}
 }

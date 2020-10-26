@@ -1,5 +1,6 @@
 package fr.rader.billy.gui.main.listeners;
 
+import fr.rader.billy.Logger;
 import fr.rader.billy.Main;
 import fr.rader.billy.gui.main.MainInterface;
 import fr.rader.billy.timeline.TimelineSerialization;
@@ -16,76 +17,75 @@ import java.nio.file.Files;
 
 public class SaveReplayListener implements ActionListener {
 
+	private Logger logger = Main.getInstance().getLogger();
+
 	private File lastFolderOpened;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		TimelineSerialization serialization = new TimelineSerialization();
 		MainInterface mainInterface = MainInterface.getInstance();
+		logger.writeln("Started saving timelines");
 
-		try {
-			if(e.getSource() instanceof JButton) {
-				boolean right = e.getSource().equals(mainInterface.saveRightReplayButton);
+		if(e.getSource() instanceof JButton) {
+			boolean right = e.getSource().equals(mainInterface.saveRightReplayButton);
 
-				try {
-					if(right && !mainInterface.saveRightReplayButton.getText().equals("Open Replay")) {
-						saveTimeline(serialization.serialize(mainInterface.rightTimelineList),
-								OpenReplayListener.RIGHT_SIDE + "timelines.json",
-								OpenReplayListener.getRightFile(),
-								null);
-					} else if(!right && !mainInterface.saveLeftReplayButton.getText().equals("Open Replay")) {
-						saveTimeline(serialization.serialize(mainInterface.leftTimelineList),
-								OpenReplayListener.LEFT_SIDE + "timelines.json",
-								OpenReplayListener.getLeftFile(),
-								null);
-					}
-				} catch (IOException ioException) {
-					ioException.printStackTrace();
+				if(right && !mainInterface.saveRightReplayButton.getText().equals("Open Replay")) {
+					saveTimeline(serialization.serialize(mainInterface.rightTimelineList),
+							OpenReplayListener.RIGHT_SIDE + "timelines.json",
+							OpenReplayListener.getRightFile(),
+							null);
+				} else if(!right && !mainInterface.saveLeftReplayButton.getText().equals("Open Replay")) {
+					saveTimeline(serialization.serialize(mainInterface.leftTimelineList),
+							OpenReplayListener.LEFT_SIDE + "timelines.json",
+							OpenReplayListener.getLeftFile(),
+							null);
 				}
-			} else {
-				switch (((JMenuItem) e.getSource()).getText()) {
-					case "Save Left As...":
-						saveTimeline(serialization.serialize(mainInterface.leftTimelineList),
-								OpenReplayListener.LEFT_SIDE + "timelines.json",
-								OpenReplayListener.getLeftFile(),
-								openFilePrompt());
-						break;
-					case "Save Right As...":
-						saveTimeline(serialization.serialize(mainInterface.rightTimelineList),
-								OpenReplayListener.RIGHT_SIDE + "timelines.json",
-								OpenReplayListener.getRightFile(),
-								openFilePrompt());
-						break;
-					case "Save Both":
-						saveTimeline(serialization.serialize(mainInterface.rightTimelineList),
-								OpenReplayListener.RIGHT_SIDE + "timelines.json",
-								OpenReplayListener.getRightFile(),
-								null);
-						saveTimeline(serialization.serialize(mainInterface.leftTimelineList),
-								OpenReplayListener.LEFT_SIDE + "timelines.json",
-								OpenReplayListener.getLeftFile(),
-								null);
-						break;
-					case "Save Right":
-						saveTimeline(serialization.serialize(mainInterface.rightTimelineList),
-								OpenReplayListener.RIGHT_SIDE + "timelines.json",
-								OpenReplayListener.getRightFile(),
-								null);
-						break;
-					case "Save Left":
-						saveTimeline(serialization.serialize(mainInterface.leftTimelineList),
-								OpenReplayListener.LEFT_SIDE + "timelines.json",
-								OpenReplayListener.getLeftFile(),
-								null);
-						break;
-				}
+		} else {
+			switch (((JMenuItem) e.getSource()).getText()) {
+				case "Save Left As...":
+					saveTimeline(serialization.serialize(mainInterface.leftTimelineList),
+							OpenReplayListener.LEFT_SIDE + "timelines.json",
+							OpenReplayListener.getLeftFile(),
+							openFilePrompt());
+					break;
+				case "Save Right As...":
+					saveTimeline(serialization.serialize(mainInterface.rightTimelineList),
+							OpenReplayListener.RIGHT_SIDE + "timelines.json",
+							OpenReplayListener.getRightFile(),
+							openFilePrompt());
+					break;
+				case "Save Both":
+					saveTimeline(serialization.serialize(mainInterface.rightTimelineList),
+							OpenReplayListener.RIGHT_SIDE + "timelines.json",
+							OpenReplayListener.getRightFile(),
+							null);
+					saveTimeline(serialization.serialize(mainInterface.leftTimelineList),
+							OpenReplayListener.LEFT_SIDE + "timelines.json",
+							OpenReplayListener.getLeftFile(),
+							null);
+					break;
+				case "Save Right":
+					saveTimeline(serialization.serialize(mainInterface.rightTimelineList),
+							OpenReplayListener.RIGHT_SIDE + "timelines.json",
+							OpenReplayListener.getRightFile(),
+							null);
+					break;
+				case "Save Left":
+					saveTimeline(serialization.serialize(mainInterface.leftTimelineList),
+							OpenReplayListener.LEFT_SIDE + "timelines.json",
+							OpenReplayListener.getLeftFile(),
+							null);
+					break;
 			}
-		} catch (IOException ioException) {
-			ioException.printStackTrace();
 		}
+
+		logger.writeln("Done!");
 	}
 
 	private void saveTimeline(String serializedTimeline, String timelinesFile, File mcprFile, File outputFile) {
+		logger.writeln("Saving timelines to '" + mcprFile.getName() + "'");
+
 		try {
 			// Writing the serialized timeline in timelines file
 			FileWriter writer = new FileWriter(timelinesFile);
@@ -124,6 +124,8 @@ public class SaveReplayListener implements ActionListener {
 
 			JOptionPane.showMessageDialog(null, "Saved to " + timelinesFile.replace("/", "\\"));
 		} catch (IOException ioException) {
+			logger.exception(ioException);
+
 			JOptionPane.showMessageDialog(null, ioException.getLocalizedMessage());
 		}
 	}

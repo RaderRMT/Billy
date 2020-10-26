@@ -1,5 +1,7 @@
 package fr.rader.billy.gui.inspector.listeners;
 
+import fr.rader.billy.Logger;
+import fr.rader.billy.Main;
 import fr.rader.billy.gui.inspector.TimelineInspector;
 import fr.rader.billy.timeline.Keyframe;
 
@@ -9,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SaveKeyframeListener implements ActionListener {
+
+	private Logger logger = Main.getInstance().getLogger();
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -33,10 +37,16 @@ public class SaveKeyframeListener implements ActionListener {
 
 			boolean isSpectator = timelineInspector.spectatorKeyframeCheck.isSelected();
 
+			logger.writeln("Started saving position keyframe #" + selectedKeyframe);
+			logger.writeln("Writing timestamp: " + timestamp);
+			logger.writeln("Writing spectator: " + isSpectator);
+
 			Map<String, Object> properties = new HashMap<>();
 			properties.put("camera:rotation", rotation);
 			properties.put("camera:position", position);
 			if(isSpectator) properties.put("spectate", 1);
+
+			logger.writeln("Writing properties: " + logger.readProperties(properties));
 
 			Keyframe newKeyframe = new Keyframe(timestamp, properties);
 			timelineInspector.positionPath.getKeyframes().set(selectedKeyframe, newKeyframe);
@@ -45,8 +55,14 @@ public class SaveKeyframeListener implements ActionListener {
 
 			int replayTimestamp = Integer.parseInt(timelineInspector.replayTimestampField.getText());
 
+			logger.writeln("Started saving time keyframe #" + selectedKeyframe);
+			logger.writeln("Writing keyframe timestamp: " + timestamp);
+			logger.writeln("Writing replay timestamp: " + replayTimestamp);
+
 			Map<String, Object> properties = new HashMap<>();
 			properties.put("timestamp", replayTimestamp);
+
+			logger.writeln("Writing properties: " + logger.readProperties(properties));
 
 			Keyframe newKeyframe = new Keyframe(timestamp, properties);
 			timelineInspector.timePath.getKeyframes().set(selectedKeyframe, newKeyframe);

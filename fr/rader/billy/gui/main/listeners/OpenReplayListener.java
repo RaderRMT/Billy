@@ -1,5 +1,7 @@
 package fr.rader.billy.gui.main.listeners;
 
+import fr.rader.billy.Logger;
+import fr.rader.billy.Main;
 import fr.rader.billy.gui.main.MainInterface;
 import fr.rader.billy.timeline.TimelineSerialization;
 import net.lingala.zip4j.ZipFile;
@@ -17,9 +19,11 @@ import java.util.HashMap;
 
 public class OpenReplayListener implements ActionListener {
 
-	public static final String REPLAY_RECORDINGS = System.getenv("APPDATA") + "/.minecraft/replay_recordings/";
-	public static final String LEFT_SIDE = REPLAY_RECORDINGS + "extracted_timelines/left/";
-	public static final String RIGHT_SIDE = REPLAY_RECORDINGS + "extracted_timelines/right/";
+	private static Logger logger = Main.getInstance().getLogger();
+
+	public static final String REPLAY_RECORDINGS = System.getenv("APPDATA") + "\\.minecraft\\replay_recordings\\";
+	public static final String LEFT_SIDE = REPLAY_RECORDINGS + "extracted_timelines\\left\\";
+	public static final String RIGHT_SIDE = REPLAY_RECORDINGS + "extracted_timelines\\right\\";
 
 	private static File[] files = new File[] {
 			new File(REPLAY_RECORDINGS),
@@ -55,23 +59,13 @@ public class OpenReplayListener implements ActionListener {
 			}
 
 			if(isOpenLeft) {
-				try {
-					if(hasTimeline) mainInterface.leftTimelineList = serialization.deserialize(new File(side + "timelines.json"));
-					else if(mainInterface.leftTimelineList != null && !mainInterface.leftTimelineList.isEmpty()) mainInterface.leftTimelineList.clear();
-					else if(mainInterface.leftTimelineList == null) mainInterface.leftTimelineList = new HashMap<>();
-				} catch (IOException ioException) {
-					JOptionPane.showMessageDialog(null, "Error while deserializing: " + ioException.getLocalizedMessage());
-					return;
-				}
+				if(hasTimeline) mainInterface.leftTimelineList = serialization.deserialize(new File(side + "timelines.json"));
+				else if(mainInterface.leftTimelineList != null && !mainInterface.leftTimelineList.isEmpty()) mainInterface.leftTimelineList.clear();
+				else if(mainInterface.leftTimelineList == null) mainInterface.leftTimelineList = new HashMap<>();
 			} else {
-				try {
-					if(hasTimeline) mainInterface.rightTimelineList = serialization.deserialize(new File(side + "timelines.json"));
-					else if(mainInterface.rightTimelineList != null && !mainInterface.rightTimelineList.isEmpty()) mainInterface.rightTimelineList.clear();
-					else if(mainInterface.rightTimelineList == null) mainInterface.rightTimelineList = new HashMap<>();
-				} catch (IOException ioException) {
-					JOptionPane.showMessageDialog(null, "Error while deserializing: " + ioException.getLocalizedMessage());
-					return;
-				}
+				if(hasTimeline) mainInterface.rightTimelineList = serialization.deserialize(new File(side + "timelines.json"));
+				else if(mainInterface.rightTimelineList != null && !mainInterface.rightTimelineList.isEmpty()) mainInterface.rightTimelineList.clear();
+				else if(mainInterface.rightTimelineList == null) mainInterface.rightTimelineList = new HashMap<>();
 			}
 
 			mainInterface.updateNames();
@@ -95,7 +89,10 @@ public class OpenReplayListener implements ActionListener {
 			else hasNewReplay = false;
 		}
 
+		logger.writeln("Opening Replay '" + file.getName() + "' on side " + side);
+
 		if(!hasNewReplay) {
+			logger.writeln("Same replay!");
 			JOptionPane.showMessageDialog(null, "Replays must be different!");
 			return;
 		}
@@ -119,6 +116,8 @@ public class OpenReplayListener implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Warning:\n" + zipException.getLocalizedMessage() + "\nAssuming the Replay does not contain a timeline.");
 			}
 		}
+
+		logger.writeln("Done!");
 	}
 
 	private File openFilePrompt() {
@@ -157,6 +156,7 @@ public class OpenReplayListener implements ActionListener {
 
 	public static void refreshLeft() {
 		if(!files[1].equals(new File(""))) {
+			logger.writeln("Refreshing left replay...");
 			hasNewReplay = true;
 			openReplay(files[1], LEFT_SIDE);
 			startLoadingReplay(LEFT_SIDE, true);
@@ -165,6 +165,7 @@ public class OpenReplayListener implements ActionListener {
 
 	public static void refreshRight() {
 		if(!files[2].equals(new File(""))) {
+			logger.writeln("Refreshing right replay...");
 			hasNewReplay = true;
 			openReplay(files[2], RIGHT_SIDE);
 			startLoadingReplay(RIGHT_SIDE, false);
