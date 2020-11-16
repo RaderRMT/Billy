@@ -18,9 +18,9 @@ public class SaveKeyframeListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		TimelineInspector timelineInspector = TimelineInspector.getInstance();
 
-		int selectedKeyframe = timelineInspector.selectedKeyframeCombo.getSelectedIndex();
-
 		if(e.getSource().equals(timelineInspector.savePositionKeyframeButton)) {
+			int selectedKeyframe = timelineInspector.selectedKeyframeCombo.getSelectedIndex();
+
 			int timestamp = Integer.parseInt(timelineInspector.timestampField.getText());
 
 			double[] rotation = {
@@ -51,6 +51,8 @@ public class SaveKeyframeListener implements ActionListener {
 			Keyframe newKeyframe = new Keyframe(timestamp, properties);
 			timelineInspector.positionPath.getKeyframes().set(selectedKeyframe, newKeyframe);
 		} else {
+			int selectedKeyframe = timelineInspector.selectedTimeKeyframeCombo.getSelectedIndex();
+
 			int timestamp = Integer.parseInt(timelineInspector.keyframeTimestampField.getText());
 
 			int replayTimestamp = Integer.parseInt(timelineInspector.replayTimestampField.getText());
