@@ -69,9 +69,6 @@ public class TimelineInspector {
 	public JTextField newYField;
 	public JTextField newZField;
 	private JButton shiftReplayTimestampsButton;
-    private JSpinner syncKeyframesSpinner;
-	private JButton syncTimeKeyframesButton;
-	private JLabel syncKeyframesLabel;
 
 	public Path timePath;
 	public Path positionPath;
