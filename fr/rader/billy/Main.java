@@ -26,6 +26,8 @@ public class Main {
 		logger.writeln("Current date is: " + logger.currentDate());
 
 		logger.writeln("Checking folders...");
+		OpenReplayListener.setupPaths();
+
 		// Check if every folders exists
 		File toCheck = new File(OpenReplayListener.REPLAY_RECORDINGS);
 		if(!toCheck.exists()) JOptionPane.showMessageDialog(null, "The replay_recordings folder does not exist.");

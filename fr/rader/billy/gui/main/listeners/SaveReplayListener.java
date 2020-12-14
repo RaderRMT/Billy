@@ -106,7 +106,7 @@ public class SaveReplayListener implements ActionListener {
 				ZipFile outMcpr = new ZipFile(mcprFile);
 				outMcpr.addFile(timelinesFile);
 
-				JOptionPane.showMessageDialog(null, "Saved to " + mcprFile.getAbsolutePath().replace("/", "\\"));
+				JOptionPane.showMessageDialog(null, "Saved to " + mcprFile.getAbsolutePath());
 				return;
 			}
 
@@ -122,7 +122,7 @@ public class SaveReplayListener implements ActionListener {
 				return;
 			}
 
-			JOptionPane.showMessageDialog(null, "Saved to " + timelinesFile.replace("/", "\\"));
+			JOptionPane.showMessageDialog(null, "Saved to " + timelinesFile);
 		} catch (IOException ioException) {
 			logger.exception(ioException);
 

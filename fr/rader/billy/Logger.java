@@ -12,9 +12,21 @@ import java.util.Map;
 
 public class Logger {
 
-	private final File LOG_OUTPUT = new File(System.getenv("APPDATA") + "/.minecraft/logs/billy.log");
+	private File LOG_OUTPUT;
 
 	private List<String> unusedFields = new ArrayList<>();
+
+	public Logger() {
+		String os = System.getProperty("os.name").toLowerCase();
+
+		if(os.contains("windows")) {
+			LOG_OUTPUT = new File(System.getenv("APPDATA") + "/.minecraft/logs/billy.log");
+		} else if(os.contains("nix") || os.contains("nux") || os.contains("aix")) {
+			LOG_OUTPUT = new File("~/.minecraft/logs/billy.log");
+		} else if(os.contains("mac")) {
+			LOG_OUTPUT = new File("~/Library/Application Support/minecraft/logs/billy.log");
+		}
+	}
 
 	public void writeln(String message) {
 		write(message + "\n");
@@ -103,7 +115,7 @@ public class Logger {
 		writeln("Timelines dump: " + replay);
 
 		JOptionPane.showMessageDialog(null, "ERROR: " + exception.getLocalizedMessage() +
-				"\nPlease open an issue on https://github.com/Nemos59/Billy/issues, and provide the \".minecraft\\logs\\billy.log\" file.");
+				"\nPlease open an issue on https://github.com/Nemos59/Billy/issues, and provide the \".minecraft/logs/billy.log\" file.");
 	}
 
 	public void printUnused(String replay) {

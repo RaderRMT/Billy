@@ -1,5 +1,6 @@
 package fr.rader.billy.gui.main.listeners;
 
+import com.google.gson.Gson;
 import fr.rader.billy.Logger;
 import fr.rader.billy.Main;
 import fr.rader.billy.gui.main.MainInterface;
@@ -12,30 +13,51 @@ import javax.swing.filechooser.FileFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class OpenReplayListener implements ActionListener {
 
 	private static Logger logger = Main.getInstance().getLogger();
 
-	public static final String REPLAY_RECORDINGS = System.getenv("APPDATA") + "\\.minecraft\\replay_recordings\\";
-	public static final String LEFT_SIDE = REPLAY_RECORDINGS + "extracted_timelines\\left\\";
-	public static final String RIGHT_SIDE = REPLAY_RECORDINGS + "extracted_timelines\\right\\";
+	public static String REPLAY_RECORDINGS;
+	public static String LEFT_SIDE;
+	public static String RIGHT_SIDE;
 
-	private static File[] files = new File[] {
-			new File(REPLAY_RECORDINGS),
-			new File(""),
-			new File("")
-	};
+	private static File[] files;
 
 	private static boolean hasTimeline = true;
 	private static boolean hasNewReplay = false;
 
 	private static TimelineSerialization serialization;
 	private static MainInterface mainInterface;
+
+	public static void setupPaths() {
+		String os = System.getProperty("os.name").toLowerCase();
+
+		if(os.contains("windows")) {
+			REPLAY_RECORDINGS = System.getenv("APPDATA") + "/.minecraft/replay_recordings/";
+		} else if(os.contains("nix") || os.contains("nux") || os.contains("aix")) {
+			REPLAY_RECORDINGS = "~/.minecraft/replay_recordings/";
+		} else if(os.contains("mac")) {
+			REPLAY_RECORDINGS = "~/Library/Application Support/minecraft/replay_recordings/";
+		}
+
+		LEFT_SIDE = REPLAY_RECORDINGS + "extracted_timelines/left/";
+		RIGHT_SIDE = REPLAY_RECORDINGS + "extracted_timelines/right/";
+
+		files = new File[] {
+				new File(REPLAY_RECORDINGS),
+				new File(""),
+				new File("")
+		};
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -47,15 +69,15 @@ public class OpenReplayListener implements ActionListener {
 
 		openReplay(openFilePrompt(), side);
 
-		startLoadingReplay(side, isOpenLeft);
+		startLoadingReplay(side, isOpenLeft, getVersion(files[1]));
 	}
 
-	private static void startLoadingReplay(String side, boolean isOpenLeft) {
+	private static void startLoadingReplay(String side, boolean isOpenLeft, String version) {
 		if(hasNewReplay) {
 			if(isOpenLeft && !files[1].equals(new File(""))) { // left side
-				mainInterface.openLeftReplayButton.setText(files[1].getName());
+				mainInterface.openLeftReplayButton.setText(files[1].getName() + " (" + version + ")");
 			} else if(!isOpenLeft && !files[2].equals(new File(""))) { // right side
-				mainInterface.openRightReplayButton.setText(files[2].getName());
+				mainInterface.openRightReplayButton.setText(files[2].getName() + " (" + version + ")");
 			}
 
 			if(isOpenLeft) {
@@ -146,6 +168,23 @@ public class OpenReplayListener implements ActionListener {
 		return null;
 	}
 
+	public static String getVersion(File file) {
+		try {
+			ZipFile mcprFile = new ZipFile(file);
+			mcprFile.extractFile("metaData.json", REPLAY_RECORDINGS + "/extracted_timelines/");
+
+			Gson gson = new Gson();
+
+			Map<?, ?> map = gson.fromJson(new FileReader(new File(REPLAY_RECORDINGS + "/extracted_timelines/metaData.json")), Map.class);
+
+			return map.get("mcversion").toString();
+		} catch (FileNotFoundException | ZipException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
 	public static File getRightFile() {
 		return files[2];
 	}
@@ -159,7 +198,7 @@ public class OpenReplayListener implements ActionListener {
 			logger.writeln("Refreshing left replay...");
 			hasNewReplay = true;
 			openReplay(files[1], LEFT_SIDE);
-			startLoadingReplay(LEFT_SIDE, true);
+			startLoadingReplay(LEFT_SIDE, true, getVersion(files[1]));
 		}
 	}
 
@@ -168,7 +207,7 @@ public class OpenReplayListener implements ActionListener {
 			logger.writeln("Refreshing right replay...");
 			hasNewReplay = true;
 			openReplay(files[2], RIGHT_SIDE);
-			startLoadingReplay(RIGHT_SIDE, false);
+			startLoadingReplay(RIGHT_SIDE, false, getVersion(files[1]));
 		}
 	}
 }
