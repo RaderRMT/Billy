@@ -9,7 +9,7 @@ That one will look odd for newcomers, but this is Billy's main interface (yes th
 
 ![](docs/main_interface.png)
 
-As you can see, there are plenty of things that Billy caOn do. Let's start with the first function: opening a Replay.
+As you can see, there are plenty of things that Billy can do. Let's start with the first function: opening a Replay.
 
 ## Opening a Replay
 
