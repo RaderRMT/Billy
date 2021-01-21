@@ -19,9 +19,9 @@ public class SaveKeyframeListener implements ActionListener {
 		TimelineInspector timelineInspector = TimelineInspector.getInstance();
 
 		if(e.getSource().equals(timelineInspector.savePositionKeyframeButton)) {
-			int selectedKeyframe = timelineInspector.selectedKeyframeCombo.getSelectedIndex();
+			int selectedKeyframe = timelineInspector.selectedPositionKeyframeCombo.getSelectedIndex();
 
-			int timestamp = Integer.parseInt(timelineInspector.timestampField.getText());
+			int timestamp = Integer.parseInt(timelineInspector.positionKeyframeTimestampField.getText());
 
 			double[] rotation = {
 					Double.parseDouble(timelineInspector.yawField.getText()),
@@ -35,7 +35,7 @@ public class SaveKeyframeListener implements ActionListener {
 					Double.parseDouble(timelineInspector.zField.getText())
 			};
 
-			boolean isSpectator = timelineInspector.spectatorKeyframeCheck.isSelected();
+			boolean isSpectator = timelineInspector.isSpectatorKeyframeCheck.isSelected();
 
 			logger.writeln("Started saving position keyframe #" + selectedKeyframe);
 			logger.writeln("Writing timestamp: " + timestamp);
@@ -53,7 +53,7 @@ public class SaveKeyframeListener implements ActionListener {
 		} else {
 			int selectedKeyframe = timelineInspector.selectedTimeKeyframeCombo.getSelectedIndex();
 
-			int timestamp = Integer.parseInt(timelineInspector.keyframeTimestampField.getText());
+			int timestamp = Integer.parseInt(timelineInspector.timeKeyframeTimestampField.getText());
 
 			int replayTimestamp = Integer.parseInt(timelineInspector.replayTimestampField.getText());
 

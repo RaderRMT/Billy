@@ -16,7 +16,7 @@ public class TimeKeyframeListener implements ActionListener {
 
 		if(timelineInspector.timePath.getKeyframes().size() == 0) return;
 
-		timelineInspector.replayTimestampField.setText(String.valueOf(timelineInspector.timePath.getKeyframes().get(Integer.parseInt(selectedType)).getTime()));
-		timelineInspector.keyframeTimestampField.setText(String.valueOf(timelineInspector.timePath.getKeyframes().get(Integer.parseInt(selectedType)).getProperties().get("timestamp")));
+		timelineInspector.timeKeyframeTimestampField.setText(String.valueOf(timelineInspector.timePath.getKeyframes().get(Integer.parseInt(selectedType)).getTime()));
+		timelineInspector.replayTimestampField.setText(String.valueOf(timelineInspector.timePath.getKeyframes().get(Integer.parseInt(selectedType)).getProperties().get("timestamp")));
 	}
 }

@@ -16,7 +16,7 @@ public class PositionKeyframeListener implements ActionListener {
 
 		if(timelineInspector.positionPath.getKeyframes().size() == 0) return;
 
-		timelineInspector.timestampField.setText(String.valueOf(timelineInspector.positionPath.getKeyframes().get(selectedType).getTime()));
+		timelineInspector.positionKeyframeTimestampField.setText(String.valueOf(timelineInspector.positionPath.getKeyframes().get(selectedType).getTime()));
 
 		double[] rotation = (double[]) timelineInspector.positionPath.getKeyframes().get(selectedType).getProperties().get("camera:rotation");
 
@@ -30,6 +30,6 @@ public class PositionKeyframeListener implements ActionListener {
 		timelineInspector.yField.setText(String.valueOf(position[1]));
 		timelineInspector.zField.setText(String.valueOf(position[2]));
 
-		timelineInspector.spectatorKeyframeCheck.setSelected(timelineInspector.positionPath.getKeyframes().get(selectedType).getProperties().containsKey("spectate"));
+		timelineInspector.isSpectatorKeyframeCheck.setSelected(timelineInspector.positionPath.getKeyframes().get(selectedType).getProperties().containsKey("spectate"));
 	}
 }

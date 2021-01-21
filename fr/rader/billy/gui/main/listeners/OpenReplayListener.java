@@ -69,29 +69,27 @@ public class OpenReplayListener implements ActionListener {
 
 		openReplay(openFilePrompt(), side);
 
-		startLoadingReplay(side, isOpenLeft, getVersion(files[1]));
+		if(hasNewReplay) startLoadingReplay(side, isOpenLeft, getVersion(files[1]));
 	}
 
 	private static void startLoadingReplay(String side, boolean isOpenLeft, String version) {
-		if(hasNewReplay) {
-			if(isOpenLeft && !files[1].equals(new File(""))) { // left side
-				mainInterface.openLeftReplayButton.setText(files[1].getName() + " (" + version + ")");
-			} else if(!isOpenLeft && !files[2].equals(new File(""))) { // right side
-				mainInterface.openRightReplayButton.setText(files[2].getName() + " (" + version + ")");
-			}
-
-			if(isOpenLeft) {
-				if(hasTimeline) mainInterface.leftTimelineList = serialization.deserialize(new File(side + "timelines.json"));
-				else if(mainInterface.leftTimelineList != null && !mainInterface.leftTimelineList.isEmpty()) mainInterface.leftTimelineList.clear();
-				else if(mainInterface.leftTimelineList == null) mainInterface.leftTimelineList = new HashMap<>();
-			} else {
-				if(hasTimeline) mainInterface.rightTimelineList = serialization.deserialize(new File(side + "timelines.json"));
-				else if(mainInterface.rightTimelineList != null && !mainInterface.rightTimelineList.isEmpty()) mainInterface.rightTimelineList.clear();
-				else if(mainInterface.rightTimelineList == null) mainInterface.rightTimelineList = new HashMap<>();
-			}
-
-			mainInterface.updateNames();
+		if(isOpenLeft && !files[1].equals(new File(""))) { // left side
+			mainInterface.openLeftReplayButton.setText(files[1].getName() + " (" + version + ")");
+		} else if(!isOpenLeft && !files[2].equals(new File(""))) { // right side
+			mainInterface.openRightReplayButton.setText(files[2].getName() + " (" + version + ")");
 		}
+
+		if(isOpenLeft) {
+			if(hasTimeline) mainInterface.leftTimelineList = serialization.deserialize(new File(side + "timelines.json"));
+			else if(mainInterface.leftTimelineList != null && !mainInterface.leftTimelineList.isEmpty()) mainInterface.leftTimelineList.clear();
+			else if(mainInterface.leftTimelineList == null) mainInterface.leftTimelineList = new HashMap<>();
+		} else {
+			if(hasTimeline) mainInterface.rightTimelineList = serialization.deserialize(new File(side + "timelines.json"));
+			else if(mainInterface.rightTimelineList != null && !mainInterface.rightTimelineList.isEmpty()) mainInterface.rightTimelineList.clear();
+			else if(mainInterface.rightTimelineList == null) mainInterface.rightTimelineList = new HashMap<>();
+		}
+
+		mainInterface.updateNames();
 	}
 
 	private static void openReplay(File file, String side) {
@@ -175,7 +173,7 @@ public class OpenReplayListener implements ActionListener {
 
 			Gson gson = new Gson();
 
-			Map<?, ?> map = gson.fromJson(new FileReader(new File(REPLAY_RECORDINGS + "/extracted_timelines/metaData.json")), Map.class);
+			Map<?, ?> map = gson.fromJson(new FileReader(REPLAY_RECORDINGS + "/extracted_timelines/metaData.json"), Map.class);
 
 			return map.get("mcversion").toString();
 		} catch (FileNotFoundException | ZipException e) {
