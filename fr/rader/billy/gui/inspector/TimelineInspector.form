@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="fr.rader.billy.gui.inspector.TimelineInspector">
-  <grid id="27dc6" binding="panel" layout-manager="GridLayoutManager" row-count="10" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="panel" layout-manager="GridLayoutManager" row-count="5" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="989" height="417"/>
+      <xy x="20" y="20" width="1202" height="448"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <component id="f33bc" class="javax.swing.JLabel" binding="timelineNameLabel">
+      <component id="f2889" class="javax.swing.JLabel" binding="timelineNameLabel">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -16,17 +16,7 @@
           <text value="Timeline Name"/>
         </properties>
       </component>
-      <component id="e37d9" class="javax.swing.JTextField" binding="timelineNameField">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="270" height="-1"/>
-          </grid>
-        </constraints>
-        <properties>
-          <editable value="false"/>
-        </properties>
-      </component>
-      <component id="abde5" class="javax.swing.JLabel" binding="positionKeyframesLabel">
+      <component id="20460" class="javax.swing.JLabel" binding="positionKeyframeLabel">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -34,17 +24,7 @@
           <text value="Position Keyframes"/>
         </properties>
       </component>
-      <component id="ca361" class="javax.swing.JTextField" binding="positionKeyframesField">
-        <constraints>
-          <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="270" height="-1"/>
-          </grid>
-        </constraints>
-        <properties>
-          <editable value="false"/>
-        </properties>
-      </component>
-      <component id="d938d" class="javax.swing.JLabel" binding="timeKeyframesLabel">
+      <component id="29697" class="javax.swing.JLabel" binding="timeKeyframesLabel">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -52,25 +32,45 @@
           <text value="Time Keyframes"/>
         </properties>
       </component>
-      <component id="214f2" class="javax.swing.JTextField" binding="timeKeyframesField">
+      <component id="fbcf2" class="javax.swing.JTextField" binding="timelineNameField">
         <constraints>
-          <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="270" height="-1"/>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="151" height="30"/>
           </grid>
         </constraints>
         <properties>
           <editable value="false"/>
         </properties>
       </component>
-      <grid id="34c41" binding="leftPanel" layout-manager="GridLayoutManager" row-count="9" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <component id="1b389" class="javax.swing.JTextField" binding="positionKeyframesAmountField">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="151" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <editable value="false"/>
+        </properties>
+      </component>
+      <component id="bb8d1" class="javax.swing.JTextField" binding="timeKeyframesAmountField">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="151" height="30"/>
+          </grid>
+        </constraints>
+        <properties>
+          <editable value="false"/>
+        </properties>
+      </component>
+      <grid id="360df" binding="timestampDataPanel" layout-manager="GridLayoutManager" row-count="10" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="3" column="0" row-span="7" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="0" row-span="2" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <component id="594c7" class="javax.swing.JLabel" binding="selectedPositionKeyframeLabel">
+          <component id="8b34e" class="javax.swing.JLabel" binding="selectedPositionKeyframeLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -78,29 +78,15 @@
               <text value="Selected Position Keyframe"/>
             </properties>
           </component>
-          <component id="1114b" class="javax.swing.JComboBox" binding="selectedKeyframeCombo">
-            <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="49a9d" class="javax.swing.JLabel" binding="timestampLabel">
+          <component id="2ff14" class="javax.swing.JLabel" binding="positionKeyframeTimestampLabel">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Timestamp"/>
+              <text value="Keyframe Timestamp"/>
             </properties>
           </component>
-          <component id="37036" class="javax.swing.JTextField" binding="timestampField">
-            <constraints>
-              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="b6535" class="javax.swing.JLabel" binding="cameraRotationLabel">
+          <component id="54d02" class="javax.swing.JLabel" binding="cameraRotationLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -108,55 +94,31 @@
               <text value="Camera Rotation:"/>
             </properties>
           </component>
-          <component id="2ac8a" class="javax.swing.JLabel" binding="yawLabel">
+          <component id="e5f63" class="javax.swing.JLabel" binding="yawLabel">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="yaw:"/>
+              <text value="Yaw:"/>
             </properties>
           </component>
-          <component id="1e02d" class="javax.swing.JLabel" binding="pitchLabel">
+          <component id="6f5eb" class="javax.swing.JLabel" binding="pitchLabel">
             <constraints>
               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="pitch:"/>
+              <text value="Pitch:"/>
             </properties>
           </component>
-          <component id="87c1d" class="javax.swing.JLabel" binding="rollLabel">
+          <component id="d7786" class="javax.swing.JLabel" binding="rollLabel">
             <constraints>
               <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="roll:"/>
+              <text value="Roll:"/>
             </properties>
           </component>
-          <component id="607ae" class="javax.swing.JTextField" binding="yawField">
-            <constraints>
-              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="6ff82" class="javax.swing.JTextField" binding="pitchField">
-            <constraints>
-              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="f1d9b" class="javax.swing.JTextField" binding="rollField">
-            <constraints>
-              <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="8966" class="javax.swing.JLabel" binding="cameraPositionLabel">
+          <component id="c6a77" class="javax.swing.JLabel" binding="cameraPositionLabel">
             <constraints>
               <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -164,15 +126,71 @@
               <text value="Camera Position:"/>
             </properties>
           </component>
-          <component id="a9810" class="javax.swing.JLabel" binding="xLabel">
+          <component id="c5b77" class="javax.swing.JLabel" binding="xLabel">
             <constraints>
               <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="x:"/>
+              <text value="X:"/>
             </properties>
           </component>
-          <component id="5ed3a" class="javax.swing.JTextField" binding="xField">
+          <component id="b522d" class="javax.swing.JLabel" binding="yLabel">
+            <constraints>
+              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Y:"/>
+            </properties>
+          </component>
+          <component id="be25c" class="javax.swing.JLabel" binding="zLabel">
+            <constraints>
+              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Z:"/>
+            </properties>
+          </component>
+          <component id="b7e9d" class="javax.swing.JLabel" binding="isSpectatorKeyframeLabel">
+            <constraints>
+              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Is Spectator Keyframe?"/>
+            </properties>
+          </component>
+          <component id="e581f" class="javax.swing.JTextField" binding="positionKeyframeTimestampField">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="47fd6" class="javax.swing.JTextField" binding="yawField">
+            <constraints>
+              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="85e02" class="javax.swing.JTextField" binding="pitchField">
+            <constraints>
+              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="1d4" class="javax.swing.JTextField" binding="rollField">
+            <constraints>
+              <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="3de4c" class="javax.swing.JTextField" binding="xField">
             <constraints>
               <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -180,23 +198,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="c0054" class="javax.swing.JLabel" binding="yLabel">
-            <constraints>
-              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="y:"/>
-            </properties>
-          </component>
-          <component id="1764b" class="javax.swing.JLabel" binding="zLabel">
-            <constraints>
-              <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="z:"/>
-            </properties>
-          </component>
-          <component id="34754" class="javax.swing.JTextField" binding="yField">
+          <component id="b406b" class="javax.swing.JTextField" binding="yField">
             <constraints>
               <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -204,7 +206,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="8fc0f" class="javax.swing.JTextField" binding="zField">
+          <component id="70cf8" class="javax.swing.JTextField" binding="zField">
             <constraints>
               <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -212,15 +214,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="e9cd0" class="javax.swing.JLabel" binding="spectatorKeyframeLabel">
-            <constraints>
-              <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Is Spectator Keyframe:"/>
-            </properties>
-          </component>
-          <component id="891b5" class="javax.swing.JCheckBox" binding="spectatorKeyframeCheck">
+          <component id="46bfb" class="javax.swing.JCheckBox" binding="isSpectatorKeyframeCheck">
             <constraints>
               <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -228,57 +222,85 @@
               <text value=""/>
             </properties>
           </component>
+          <component id="fb96" class="javax.swing.JLabel" binding="selectedTimeKeyframeLabel">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Selected Time Keyframe"/>
+            </properties>
+          </component>
+          <component id="19159" class="javax.swing.JLabel" binding="replayTimestampLabel">
+            <constraints>
+              <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Replay Timestamp"/>
+            </properties>
+          </component>
+          <component id="c2cae" class="javax.swing.JLabel" binding="timeKeyframeLabel">
+            <constraints>
+              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Keyframe Timestamp"/>
+            </properties>
+          </component>
+          <component id="53bf9" class="javax.swing.JTextField" binding="timeKeyframeTimestampField">
+            <constraints>
+              <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="13598" class="javax.swing.JTextField" binding="replayTimestampField">
+            <constraints>
+              <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="f66ea" class="javax.swing.JComboBox" binding="selectedPositionKeyframeCombo">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="69779" class="javax.swing.JComboBox" binding="selectedTimeKeyframeCombo">
+            <constraints>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="ad7b3" class="javax.swing.JButton" binding="savePositionKeyframeButton" default-binding="true">
+            <constraints>
+              <grid row="9" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Save Position Keyframe"/>
+            </properties>
+          </component>
+          <component id="b7ad8" class="javax.swing.JButton" binding="saveTimeKeyframeButton">
+            <constraints>
+              <grid row="9" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Save Time Keyframe"/>
+            </properties>
+          </component>
         </children>
       </grid>
-      <component id="3f7cd" class="javax.swing.JButton" binding="savePositionKeyframeButton" default-binding="true">
-        <constraints>
-          <grid row="9" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Save Position Keyframe"/>
-        </properties>
-      </component>
-      <component id="342ae" class="javax.swing.JButton" binding="shiftTimelineButton" default-binding="true">
-        <constraints>
-          <grid row="8" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Shift Timeline"/>
-        </properties>
-      </component>
-      <component id="3118e" class="javax.swing.JLabel" binding="shiftTimelineLabel">
-        <constraints>
-          <grid row="7" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
-            <preferred-size width="270" height="16"/>
-          </grid>
-        </constraints>
-        <properties>
-          <text value="Shift Timeline (ms)"/>
-        </properties>
-      </component>
-      <component id="df030" class="javax.swing.JSpinner" binding="shiftTimelineSpinner">
-        <constraints>
-          <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="cf498" class="javax.swing.JButton" binding="saveTimeKeyframeButton" default-binding="true">
-        <constraints>
-          <grid row="9" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Save Time Keyframe"/>
-        </properties>
-      </component>
-      <grid id="47fa3" binding="translateTimelinePanel" layout-manager="GridLayoutManager" row-count="3" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="c23af" binding="movePathPanel" layout-manager="GridLayoutManager" row-count="6" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="3" column="1" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="2" row-span="4" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <component id="f01c4" class="javax.swing.JLabel" binding="oldCoordsLabel">
+          <component id="dc1c8" class="javax.swing.JLabel" binding="oldCoordsLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -286,31 +308,31 @@
               <text value="Old Coords."/>
             </properties>
           </component>
-          <component id="b0de4" class="javax.swing.JLabel" binding="oldXCoordsLabel">
+          <component id="ca0ed" class="javax.swing.JLabel" binding="oldXLabel">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="x:"/>
+              <text value="X:"/>
             </properties>
           </component>
-          <component id="8b771" class="javax.swing.JLabel" binding="oldYCoordsLabel">
+          <component id="ab731" class="javax.swing.JLabel" binding="oldYLabel">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="y:"/>
+              <text value="Y:"/>
             </properties>
           </component>
-          <component id="7e3bb" class="javax.swing.JLabel" binding="oldZCoordsLabel">
+          <component id="e75fe" class="javax.swing.JLabel" binding="oldZLabel">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="z:"/>
+              <text value="Z:"/>
             </properties>
           </component>
-          <component id="58afa" class="javax.swing.JTextField" binding="oldXField">
+          <component id="7b756" class="javax.swing.JTextField" binding="oldXField">
             <constraints>
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -320,7 +342,7 @@
               <text value="0"/>
             </properties>
           </component>
-          <component id="c65f8" class="javax.swing.JTextField" binding="oldYField">
+          <component id="b6c8c" class="javax.swing.JTextField" binding="oldYField">
             <constraints>
               <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -330,7 +352,7 @@
               <text value="0"/>
             </properties>
           </component>
-          <component id="8794d" class="javax.swing.JTextField" binding="oldZField">
+          <component id="b5144" class="javax.swing.JTextField" binding="oldZField">
             <constraints>
               <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -340,7 +362,7 @@
               <text value="0"/>
             </properties>
           </component>
-          <component id="7db1e" class="javax.swing.JLabel" binding="newCoordsLabel">
+          <component id="ca855" class="javax.swing.JLabel" binding="newCoordsLabel">
             <constraints>
               <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -348,31 +370,31 @@
               <text value="New Coords."/>
             </properties>
           </component>
-          <component id="b3cb9" class="javax.swing.JLabel" binding="newXCoordsLabel">
+          <component id="83052" class="javax.swing.JLabel" binding="newXLabel">
             <constraints>
               <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="x:"/>
+              <text value="X:"/>
             </properties>
           </component>
-          <component id="fb120" class="javax.swing.JLabel" binding="newYCoordsLabel">
+          <component id="2f501" class="javax.swing.JLabel" binding="newYLabel">
             <constraints>
               <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="y:"/>
+              <text value="Y:"/>
             </properties>
           </component>
-          <component id="b839a" class="javax.swing.JLabel" binding="newZCoordsLabel">
+          <component id="c4f2f" class="javax.swing.JLabel" binding="newZLabel">
             <constraints>
               <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="z:"/>
+              <text value="Z:"/>
             </properties>
           </component>
-          <component id="17ba4" class="javax.swing.JTextField" binding="newXField">
+          <component id="35d2d" class="javax.swing.JTextField" binding="newXField">
             <constraints>
               <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -382,7 +404,7 @@
               <text value="0"/>
             </properties>
           </component>
-          <component id="4a726" class="javax.swing.JTextField" binding="newYField">
+          <component id="e2549" class="javax.swing.JTextField" binding="newYField">
             <constraints>
               <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -392,7 +414,7 @@
               <text value="0"/>
             </properties>
           </component>
-          <component id="61cac" class="javax.swing.JTextField" binding="newZField">
+          <component id="95a6" class="javax.swing.JTextField" binding="newZField">
             <constraints>
               <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -402,85 +424,103 @@
               <text value="0"/>
             </properties>
           </component>
+          <component id="88ec1" class="javax.swing.JButton" binding="movePathButton" default-binding="true">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Move Path"/>
+            </properties>
+          </component>
+          <vspacer id="e0f69">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <component id="a4574" class="javax.swing.JButton" binding="removePositionKeyframeButton">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Remove All Position Keyframes"/>
+            </properties>
+          </component>
+          <component id="3debc" class="javax.swing.JButton" binding="removeTimeKeyframeButton">
+            <constraints>
+              <grid row="4" column="3" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Remove All Time Keyframes"/>
+            </properties>
+          </component>
         </children>
       </grid>
-      <grid id="3e89" binding="rightPanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="caa29" binding="shiftPanel" layout-manager="GridLayoutManager" row-count="5" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="3" row-span="3" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <component id="a074b" class="javax.swing.JLabel" binding="replayTimestampLabel">
+          <component id="576af" class="javax.swing.JButton" binding="shiftPositionKeyframesButton" default-binding="true">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Replay Timestamp"/>
+              <text value="Shift Position Keyframes"/>
             </properties>
           </component>
-          <component id="cd264" class="javax.swing.JLabel" binding="keyframeTimestampLabel">
+          <component id="e1c1" class="javax.swing.JButton" binding="shiftTimeKeyframesButton" default-binding="true">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Shift Time Keyframes"/>
+            </properties>
+          </component>
+          <component id="683e9" class="javax.swing.JButton" binding="shiftReplayTimestampsButton" default-binding="true">
+            <constraints>
+              <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Shift Replay Timestamps"/>
+            </properties>
+          </component>
+          <component id="d2d12" class="javax.swing.JButton" binding="shiftAllKeyframesButton" default-binding="true">
+            <constraints>
+              <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Shift All Keyframes"/>
+            </properties>
+          </component>
+          <component id="4d8a9" class="javax.swing.JLabel" binding="shiftLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Keyframe Timestamp"/>
+              <text value="Shift (in ms)"/>
             </properties>
           </component>
-          <component id="bcdf2" class="javax.swing.JComboBox" binding="selectedTimeKeyframeCombo">
+          <component id="b3132" class="javax.swing.JSpinner" binding="shiftSpinner">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
           </component>
-          <component id="10d78" class="javax.swing.JTextField" binding="replayTimestampField">
+          <hspacer id="5f576">
             <constraints>
-              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
-          </component>
-          <component id="6e0bf" class="javax.swing.JTextField" binding="keyframeTimestampField">
+          </hspacer>
+          <vspacer id="6c85c">
             <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
+              <grid row="0" column="0" row-span="2" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
-          </component>
-          <component id="6cde4" class="javax.swing.JLabel" binding="selectedTimeKeyframeLabel">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Selected Time Keyframe"/>
-            </properties>
-          </component>
+          </vspacer>
         </children>
       </grid>
-      <vspacer id="f7ee2">
-        <constraints>
-          <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </vspacer>
-      <component id="530a0" class="javax.swing.JButton" binding="moveTimelineButton" default-binding="true">
-        <constraints>
-          <grid row="4" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Move Timeline"/>
-        </properties>
-      </component>
-      <component id="c34ae" class="javax.swing.JButton" binding="shiftReplayTimestampsButton" default-binding="true">
-        <constraints>
-          <grid row="8" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Shift Replay Timestamps"/>
-        </properties>
-      </component>
     </children>
   </grid>
 </form>

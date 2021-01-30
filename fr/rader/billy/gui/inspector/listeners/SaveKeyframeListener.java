@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class SaveKeyframeListener implements ActionListener {
 
-	private Logger logger = Main.getInstance().getLogger();
+	private final Logger logger = Main.getInstance().getLogger();
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

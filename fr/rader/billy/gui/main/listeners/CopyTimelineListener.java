@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class CopyTimelineListener implements ActionListener {
 
-	private Logger logger = Main.getInstance().getLogger();
+	private final Logger logger = Main.getInstance().getLogger();
 
 	private MainInterface mainInterface;
 

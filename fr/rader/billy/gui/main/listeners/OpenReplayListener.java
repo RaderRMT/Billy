@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class OpenReplayListener implements ActionListener {
 
-	private static Logger logger = Main.getInstance().getLogger();
+	private static final Logger logger = Main.getInstance().getLogger();
 
 	public static String REPLAY_RECORDINGS;
 	public static String LEFT_SIDE;

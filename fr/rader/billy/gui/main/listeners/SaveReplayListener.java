@@ -17,7 +17,7 @@ import java.nio.file.Files;
 
 public class SaveReplayListener implements ActionListener {
 
-	private Logger logger = Main.getInstance().getLogger();
+	private final Logger logger = Main.getInstance().getLogger();
 
 	private File lastFolderOpened;
 

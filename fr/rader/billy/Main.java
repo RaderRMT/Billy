@@ -11,7 +11,7 @@ public class Main {
 
 	private static Main instance;
 
-	private Logger logger = new Logger();
+	private final Logger logger = new Logger();
 
 	public JCheckBoxMenuItem saveToDefaultFolder;
 

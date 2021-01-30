@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class MovePathListener implements ActionListener {
 
-	private Logger logger = Main.getInstance().getLogger();
+	private final Logger logger = Main.getInstance().getLogger();
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

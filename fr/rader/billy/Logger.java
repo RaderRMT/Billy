@@ -115,7 +115,7 @@ public class Logger {
 		writeln("Timelines dump: " + replay);
 
 		JOptionPane.showMessageDialog(null, "ERROR: " + exception.getLocalizedMessage() +
-				"\nPlease open an issue on https://github.com/Nemos59/Billy/issues, and provide the \".minecraft/logs/billy.log\" file.");
+				"\nPlease open an issue on https://github.com/RaderRMT/Billy/issues, and provide the \"" + LOG_OUTPUT.getAbsolutePath() + "\" file.");
 	}
 
 	public void printUnused(String replay) {

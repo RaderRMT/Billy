@@ -10,7 +10,7 @@ import java.util.*;
 
 public class TimelineSerialization {
 
-	private Logger logger = Main.getInstance().getLogger();
+	private final Logger logger = Main.getInstance().getLogger();
 
 	public String serialize(Map<String, Timeline> timelines) {
 		StringWriter stringWriter = new StringWriter();
