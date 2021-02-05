@@ -87,6 +87,7 @@ public class Main {
 
 		frame.setJMenuBar(menuBar);
 
+		frame.setLocationRelativeTo(null);
 		frame.setContentPane(new MainInterface().mainPanel);
 		frame.setVisible(true);
 	}

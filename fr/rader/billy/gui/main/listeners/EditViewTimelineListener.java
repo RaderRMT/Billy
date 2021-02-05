@@ -35,6 +35,7 @@ public class EditViewTimelineListener implements ActionListener {
 		}
 
 		frame.pack();
+		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setVisible(true);
 	}
