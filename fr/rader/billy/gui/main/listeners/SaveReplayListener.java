@@ -28,19 +28,19 @@ public class SaveReplayListener implements ActionListener {
 		logger.writeln("Started saving timelines");
 
 		if(e.getSource() instanceof JButton) {
-			boolean right = e.getSource().equals(mainInterface.saveRightReplayButton);
-
-				if(right && !mainInterface.saveRightReplayButton.getText().equals("Open Replay")) {
-					saveTimeline(serialization.serialize(mainInterface.rightTimelineList),
-							OpenReplayListener.RIGHT_SIDE + "timelines.json",
-							OpenReplayListener.getRightFile(),
-							null);
-				} else if(!right && !mainInterface.saveLeftReplayButton.getText().equals("Open Replay")) {
-					saveTimeline(serialization.serialize(mainInterface.leftTimelineList),
-							OpenReplayListener.LEFT_SIDE + "timelines.json",
-							OpenReplayListener.getLeftFile(),
-							null);
-				}
+			if(e.getSource().equals(mainInterface.openRightReplayButton)) {
+				if(mainInterface.openRightReplayButton.getText().equals("Open Replay")) return;
+				saveTimeline(serialization.serialize(mainInterface.rightTimelineList),
+						OpenReplayListener.RIGHT_SIDE + "timelines.json",
+						OpenReplayListener.getRightFile(),
+						null);
+			} else {
+				if(mainInterface.openLeftReplayButton.getText().equals("Open Replay")) return;
+				saveTimeline(serialization.serialize(mainInterface.leftTimelineList),
+						OpenReplayListener.LEFT_SIDE + "timelines.json",
+						OpenReplayListener.getLeftFile(),
+						null);
+			}
 		} else {
 			switch (((JMenuItem) e.getSource()).getText()) {
 				case "Save Left As...":

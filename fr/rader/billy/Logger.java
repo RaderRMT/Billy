@@ -22,9 +22,9 @@ public class Logger {
 		if(os.contains("windows")) {
 			LOG_OUTPUT = new File(System.getenv("APPDATA") + "/.minecraft/logs/billy.log");
 		} else if(os.contains("nix") || os.contains("nux") || os.contains("aix")) {
-			LOG_OUTPUT = new File("~/.minecraft/logs/billy.log");
+			LOG_OUTPUT = new File(System.getProperty("user.home") + "/.minecraft/logs/billy.log");
 		} else if(os.contains("mac")) {
-			LOG_OUTPUT = new File("~/Library/Application Support/minecraft/logs/billy.log");
+			LOG_OUTPUT = new File(System.getProperty("user.home") + "/Library/Application Support/minecraft/logs/billy.log");
 		}
 	}
 
@@ -53,6 +53,7 @@ public class Logger {
 
 	public boolean createLog() {
 		try {
+			LOG_OUTPUT.getParentFile().mkdirs();
 			return LOG_OUTPUT.createNewFile();
 		} catch (IOException ioException) {
 			ioException.printStackTrace();

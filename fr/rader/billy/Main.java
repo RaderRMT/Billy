@@ -69,7 +69,7 @@ public class Main {
 
 		// Help
 		JMenuItem aboutItem = new JMenuItem("About");
-		// todo: add event to show a popup writing about this program
+		// todo: add event to show a "about" popup to describe this program
 
 		fileMenu.add(saveLeftAs);
 		fileMenu.add(saveRightAs);

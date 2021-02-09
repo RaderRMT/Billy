@@ -44,9 +44,9 @@ public class OpenReplayListener implements ActionListener {
 		if(os.contains("windows")) {
 			REPLAY_RECORDINGS = System.getenv("APPDATA") + "/.minecraft/replay_recordings/";
 		} else if(os.contains("nix") || os.contains("nux") || os.contains("aix")) {
-			REPLAY_RECORDINGS = "~/.minecraft/replay_recordings/";
+			REPLAY_RECORDINGS = System.getProperty("user.home") + "/.minecraft/replay_recordings/";
 		} else if(os.contains("mac")) {
-			REPLAY_RECORDINGS = "~/Library/Application Support/minecraft/replay_recordings/";
+			REPLAY_RECORDINGS = System.getProperty("user.home") + "/Library/Application Support/minecraft/replay_recordings/";
 		}
 
 		LEFT_SIDE = REPLAY_RECORDINGS + "extracted_timelines/left/";
