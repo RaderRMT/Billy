@@ -69,7 +69,11 @@ public class OpenReplayListener implements ActionListener {
 
 		openReplay(openFilePrompt(), side);
 
-		if(hasNewReplay) startLoadingReplay(side, isOpenLeft, getVersion(files[1]));
+		File selectedFile = (isOpenLeft) ? files[1] : files[2];
+		if(hasNewReplay) {
+			if(selectedFile.getName().endsWith(".json")) startLoadingReplay(side, isOpenLeft, "unknown");
+			else startLoadingReplay(side, isOpenLeft, getVersion(selectedFile));
+		}
 	}
 
 	private static void startLoadingReplay(String side, boolean isOpenLeft, String version) {
@@ -196,7 +200,8 @@ public class OpenReplayListener implements ActionListener {
 			logger.writeln("Refreshing left replay...");
 			hasNewReplay = true;
 			openReplay(files[1], LEFT_SIDE);
-			startLoadingReplay(LEFT_SIDE, true, getVersion(files[1]));
+			if(files[1].getName().endsWith(".json")) startLoadingReplay(LEFT_SIDE, true, "unknown");
+			else startLoadingReplay(LEFT_SIDE, true, getVersion(files[1]));
 		}
 	}
 
@@ -205,7 +210,8 @@ public class OpenReplayListener implements ActionListener {
 			logger.writeln("Refreshing right replay...");
 			hasNewReplay = true;
 			openReplay(files[2], RIGHT_SIDE);
-			startLoadingReplay(RIGHT_SIDE, false, getVersion(files[1]));
+			if(files[2].getName().endsWith(".json")) startLoadingReplay(RIGHT_SIDE, false, "unknown");
+			else startLoadingReplay(RIGHT_SIDE, false, getVersion(files[2]));
 		}
 	}
 }

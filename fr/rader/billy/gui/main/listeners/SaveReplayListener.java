@@ -28,7 +28,7 @@ public class SaveReplayListener implements ActionListener {
 		logger.writeln("Started saving timelines");
 
 		if(e.getSource() instanceof JButton) {
-			if(e.getSource().equals(mainInterface.openRightReplayButton)) {
+			if(e.getSource().equals(mainInterface.saveRightReplayButton)) {
 				if(mainInterface.openRightReplayButton.getText().equals("Open Replay")) return;
 				saveTimeline(serialization.serialize(mainInterface.rightTimelineList),
 						OpenReplayListener.RIGHT_SIDE + "timelines.json",
