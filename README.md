@@ -96,3 +96,7 @@ That one is also very useful, let's say you made your camera path, but forgot to
 The number can be positive or negative, but make sure you ***do not*** have a negative timestamp in your keyframes.
 
 That's basically it for the Timeline Inspector. See? Very simple.
+
+### Building From Source
+
+Make sure you are using Oracle's JDK. Otherwise you will run into issues with the JavaFX classes.
