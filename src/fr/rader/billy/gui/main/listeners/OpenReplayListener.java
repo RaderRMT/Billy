@@ -5,6 +5,9 @@ import fr.rader.billy.Logger;
 import fr.rader.billy.Main;
 import fr.rader.billy.gui.main.MainInterface;
 import fr.rader.billy.timeline.TimelineSerialization;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.stage.FileChooser;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 
@@ -19,8 +22,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 
 public class OpenReplayListener implements ActionListener {
 
@@ -145,29 +150,46 @@ public class OpenReplayListener implements ActionListener {
 	}
 
 	private File openFilePrompt() {
-		JFileChooser fileChooser = new JFileChooser(files[0]);
-		fileChooser.setAcceptAllFileFilterUsed(false);
-		fileChooser.setMultiSelectionEnabled(false);
-		fileChooser.setFileFilter(new FileFilter() {
-			@Override
-			public boolean accept(File file) {
-				return file != files[1] || file != files[2] || file.isDirectory() || file.getName().endsWith(".mcpr") || file.getName().endsWith(".json");
-			}
 
-			@Override
-			public String getDescription() {
-				return "Replay File (*.mcpr, *.json)";
-			}
+		CompletableFuture<File> completableFile = new CompletableFuture<>();
+		Platform.runLater(() -> {
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setInitialDirectory(new File(REPLAY_RECORDINGS));
+
+			//Set extension filter
+			FileChooser.ExtensionFilter extFilterMCPR = new FileChooser.ExtensionFilter("Replay File (*.mcpr, *.json)", "*.mcpr");
+			fileChooser.getExtensionFilters().addAll(extFilterMCPR);
+
+
+			//Show open file dialog
+			File file = fileChooser.showOpenDialog(null);
+			completableFile.complete(file);
+
+
 		});
 
-		int option = fileChooser.showOpenDialog(null);
-
-		if(option == JFileChooser.APPROVE_OPTION) {
-			files[0] = fileChooser.getSelectedFile().getParentFile();
-			return fileChooser.getSelectedFile();
+		while (!completableFile.isDone()){
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException ignored) {
+			}
 		}
 
-		return null;
+
+		try {
+			File file = completableFile.get();
+			if (file == null) return null;
+			if(file.isDirectory() || file.getName().endsWith(".mcpr") || file.getName().endsWith(".json")){
+				return file;
+			} else {
+				JOptionPane.showMessageDialog(null, "Invalid File Selected!");
+				return null;
+			}
+		} catch (InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 
 	public static String getVersion(File file) {
